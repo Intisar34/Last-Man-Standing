@@ -4,7 +4,10 @@
 
 To be able to use this code, make sure that you have the following softwares.
 
-1. Arduino IDE
+1. Arduino IDE.
+2. Arduino Wio Terminal.
+3. Grove Cable(With Pins).
+4. Ultrasonic Distance Sensor.
 
 ## Installation
 
@@ -39,7 +42,3 @@ _Ultrasonic Distance Sensor_
 RED -> 5v [4]
 BLACK -> GND [2]
 YELLOW -> A2 [16]
-
-_Mini PIR Sensor_
-
-Plug the Grove grove cable in the left port.
