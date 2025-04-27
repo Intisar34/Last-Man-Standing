@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 import { useNavigate } from 'react-router-dom';
 
-const RegisterScreen = ({ navigate }) => {
+const RegisterScreen = () => {
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -12,20 +12,42 @@ const RegisterScreen = ({ navigate }) => {
 
   const navigate = useNavigate();
 
-  //Handles updates in the respective input field
+  //Handles updates in the respective input field.
   const handleChange = (field, value) => {
     setForm(previous => ({ ...previous, [field]: value }));
   };
 
-  //Handles the registeration process when the user is done with the registeration
-  const handleRegister = () => {
+  //Handles validity of email and phonenumber.
+  const isValid = () => {
+
     if (!form.username || !form.email || !form.phonenumber) {
       alert('Missing Info', 'Please fill in all fields.');
       return;
     }
-    alert(`Success: Welcome to Last Man Standing, ${form.username}!`);
-    navigate('./home')
+
+    if(!form.email.includes('@') || !form.email.includes('.')) {
+      alert('Invalid Email, Please enter a valid email address!')
+      return false;
+    }
+
+    if(form.phonenumber.length !== 10 || isNaN(form.phonenumber)) {
+      alert('Invalid Phone Number, Please enter 10 digit number')
+      return false;
+    };
+
+    return true;
+
   };
+
+  //Handles the registeration process when the user is done with the registeration.
+  const handleRegister = () => {
+    if (!isValid()){
+      return;
+    }
+
+    alert(`Welcome to the Last Man Standing, ${form.username}!`);
+    navigate('./home')
+  }
 
   return (
     <View style={styles.container}>
@@ -53,7 +75,6 @@ const RegisterScreen = ({ navigate }) => {
         value={form.phonenumber}
         onChangeText={text => handleChange('phonenumber', text)}
       />
-
       <Button title='Register' onPress={handleRegister} />
       <View style={{ marginTop: 10 }}>
         <Button title='Cancel' onPress={() => navigate(-1)} color='#555' />
