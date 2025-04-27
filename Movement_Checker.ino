@@ -3,29 +3,28 @@
 #include "Ultrasonic.h"
 #include "Countimer.h"
 
-TFT_eSPI tft = TFT_eSPI();
-Ultrasonic ultrasonic(A2); // 16th pin
-
+// timer Variable
+Countimer timer;
 // Cache Variable for the distance
+float last_distance = 0.0;
 bool isMoving = false;
 bool isRedLight = false;
+TFT_eSPI tft = TFT_eSPI();
+// Conditional Function to change the Screen Color and use it for speaker
+// to tell the time left and indicate red light and green light
 bool screenIsRed = false;
+Ultrasonic ultrasonic(A2); // 16th pin
 bool gameOver = false;
+#define RESTART_BUTTON D3 // Or any pin you're using
 
-float last_distance = 0.0;
-Countimer timer;
+// Update Last Distance
 
-const int pinTempSensor = A1; // 15 pin for sig, 4 for 5v(Red), 6 for GND(Black)
-#define PIR_MOTION_SENSOR D0  // 13th pin for Mini PIR motion sensor
-#define RESTART_BUTTON D3     // Or any pin you're using
-
-// Update the Last casptured Distance before red light.
 void Update_last_Dist()
 {
   last_distance = ultrasonic.MeasureInInches();
 }
 
-// Function to check the distance when the red light is activated.
+// Distance Checking function
 void check_Distance()
 {
   delay(3000);
@@ -49,9 +48,8 @@ void check_Distance()
     }
   }
 }
-
-// Changes Screen Color once the timer reaches a certain thrushold.
-// Remarks: Need a random number generator that will indicate the pause time and start time for the game.
+// check for change in the current_distance and the last_distance recorded just before turning the red light
+// also asign a new value to the last distance once the screen turns back green.
 void setScreenColor()
 {
   float current_dist = ultrasonic.MeasureInInches();
@@ -73,13 +71,12 @@ void setScreenColor()
 // Refreshes the timer on the screen and calls the Screen Color Function
 void refreshClock()
 {
+
   tft.setCursor(40, 10);
   tft.fillRect(40, 10, 240, 30, TFT_BLACK);
   tft.print("Time Left: ");
   tft.print(timer.getCurrentTime());
 }
-
-// Runs when the timer goes to 00:00
 void timeComplete()
 {
   tft.fillScreen(TFT_BLACK);
@@ -94,8 +91,6 @@ void timeComplete()
 
   gameOver = true;
 }
-
-// Used to restart the game either if the time is over or there was a movement detected during red light
 void restartGame()
 {
   gameOver = false;
@@ -128,7 +123,6 @@ void restartGame()
 void setup()
 {
 
-  pinMode(PIR_MOTION_SENSOR, INPUT);
   pinMode(RESTART_BUTTON, INPUT_PULLUP);
   Serial.begin(9600);
   tft.begin();
@@ -144,28 +138,27 @@ void setup()
 
 void loop()
 {
-  int a = analogRead(pinTempSensor);
+  float currentDistance = ultrasonic.MeasureInInches();
   timer.run();
   setScreenColor();
-  // For Debugging
+
   Serial.print("Distance: ");
-  Serial.print(ultrasonic.MeasureInInches());
+  Serial.print(currentDistance);
   Serial.println(" cm");
-  // For Arduino Wio Terminal Screen
+
   tft.fillRect(10, 70, 280, 20, TFT_BLACK);
   tft.setCursor(10, 70);
   tft.print("Distance: ");
   tft.print(ultrasonic.MeasureInInches());
   tft.print(" inches");
-  // If there is a Red Light, It runs check_Distance() and if not Red Light, then normal distance checking function
+
   if (isRedLight)
   {
     check_Distance();
   }
   else
   {
-    Update_last_Dist();
-    if (digitalRead(PIR_MOTION_SENSOR) && ultrasonic.MeasureInInches() < 50.0)
+    if (currentDistance < 80.0)
     {
       Serial.println("You are close to wining line");
       tft.fillRect(10, 120, 280, 20, TFT_BLACK);
