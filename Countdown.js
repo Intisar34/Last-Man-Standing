@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { View,StyleSheet} from 'react-native';
 
 export default function Countdown() {
   const [count, setCount] = useState(90);
@@ -14,11 +14,11 @@ export default function Countdown() {
   }, [count]);
 
   return (
-    <div style={styles.container}>
+    <View style={styles.container}>
       <h1 style={styles.count_down}>
         {timerFormat(count)}
       </h1>
-    </div>
+    </View>
   );
 };
 
@@ -42,15 +42,15 @@ function timerFormat(time) {
 }
  
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
       backgroundColor: "#00000080", 
       alignItems: "center", 
-      padding: "10px 20px", 
+      padding: "center", 
     },
     count_down: {
       color: "#010501",
-      fontSize: "49px",
+      fontSize: "49",
       fontWeight: "bold",
     },
-  };
+  });

@@ -1,22 +1,20 @@
-
 import React from 'react';
 import Countdown from './Countdown';
+import { View,StyleSheet} from 'react-native';
 
 export default function App() {
   return (
-    <div style={styles.container}>
+    <View style={styles.container}>
       <Countdown />
-    </div>
+    </View>
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100vh',
     backgroundColor: '#fff',
   },
-};
+});
 
