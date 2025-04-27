@@ -16,7 +16,7 @@ void setup() {
   tft.setTextColor(TFT_BLACK, TFT_WHITE); 
   tft.setTextSize(5);  
 }
-
+// countdown loop
 void loop() {
   if (time >= 0) {
     int minutes = time / 60;
