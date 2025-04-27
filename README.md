@@ -1,4 +1,4 @@
-# Feature/isse-1.2-confirmation-registeration
+# feature/isse-1.2-confirmation-registeration
 
 This feature implements a registration screen where users can sign up by providing a username, email, and phone number. It includes basic form validation to ensure the information entered is correct before proceeding to the home page.
 
@@ -16,8 +16,8 @@ For this code to work, you need the following dependencies installed:
 
 1. React Router DOM (for handling navigation)
 
+**Install Dependencies**
 
-Install Dependencies
 To install these dependencies, follow the instructions.
 
 1. Clone the repository:
