@@ -1,5 +1,4 @@
-# System Developemnt
-Last Man Standing
+# Last Man Standing
 
 # Description 
 
