@@ -13,6 +13,7 @@ const HomeScreen = () => {
   );
 };
 
+//Page formatting
 const styles = StyleSheet.create({
   container: {
     flex: 1,
