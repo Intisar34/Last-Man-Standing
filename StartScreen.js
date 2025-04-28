@@ -7,7 +7,7 @@ const MQTT_BROKER = 'ws://172.20.10.2:9001';
 const MQTT_TOPIC = 'game/command';
 const client = mqtt.connect(MQTT_BROKER);
 
-const GameScreen = () => {
+const StartScreen = () => {
   const [gameState, setGameState] = useState('not_started');
   const [progress, setProgress] = useState(0);
 
@@ -91,7 +91,7 @@ const GameButton = ({ title, onPress, color }) => (
   </TouchableOpacity>
 );
 
-export default GameScreen;
+export default StartScreen;
 
 // page styling
 const styles = StyleSheet.create({
