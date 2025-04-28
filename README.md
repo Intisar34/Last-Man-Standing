@@ -1,9 +1,9 @@
 <<<<<<< HEAD
 # FrontEnd
 
-## Prerequisites
+## Prerequisite
 
-To be able to use this code, make sure that you have the following softwares.
+To be able to use this code, make sure that you have the following software installed:
 
 1. Arduino IDE
 2. Visual Studio Code
