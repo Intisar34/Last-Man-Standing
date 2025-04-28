@@ -1,0 +1,17 @@
+
+*.hex
+*.elf
+*.bin
+
+*.tmp
+*.bak
+*.swp
+
+.DS_Store
+Thumbs.db
+
+.vscode/
+
+
+*.cpp
+*.o
