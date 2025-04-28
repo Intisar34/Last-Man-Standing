@@ -1,23 +1,22 @@
-# feature/issue-8.1-detect-player-movement
+# FrontEnd
 
-## Prerequisites
+## Prerequisite
 
-To be able to use this code, make sure that you have the following softwares.
+To be able to use this code, make sure that you have the following software installed:
 
-1. Arduino IDE.
-2. Arduino Wio Terminal.
-3. Grove Cable(With Pins).
-4. Ultrasonic Distance Sensor.
+1. Arduino IDE
+2. Visual Studio Code
+3. Node.js and npm
 
 ## Installation
 
 For this code to work, you need the following Libraries Installed.
 
 TFT_eSPI = [https://github.com/Bodmer/TFT_eSPI]
+rpcWiFi.h = [https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi]
+ArduinoMqttClient.h = [https://github.com/arduino-libraries/ArduinoMqttClient]
+PubSubClient.h = [https://pubsubclient.knolleary.net]
 
-Ultrasonic = [https://github.com/ErickSimoes/Ultrasonic]
-
-Countimer = [https://github.com/inflop/Countimer]
 
 ### Importing Libraries
 
@@ -36,9 +35,12 @@ To import these libraries, follow the instructions.
 4. Insert the following link:
    [https://arduino.esp8266.com/stable/package_esp8266com_index.json,https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json]
 
-## Setting Up Pins.
+## Setup
 
-_Ultrasonic Distance Sensor_
-RED -> 5v [4]
-BLACK -> GND [2]
-YELLOW -> A2 [16]
+### For wifi connection
+
+Make sure you update your WiFi SSID and PASSWORD inside the Arduino_wifi.ino file before uploading.
+
+### For mqtt broker connection
+
+Make sure you start your broker localy and you need to retrieve your local network ip adress as the _mqtt_server_, as well as the operating mqtt port 1883.
