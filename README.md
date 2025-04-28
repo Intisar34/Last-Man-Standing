@@ -1,4 +1,17 @@
-# FrontEnd
+# System Developemnt
+Last Man Standing
+
+# Description 
+
+
+# Hardware list
+1. UltraSonic sensor
+2. LCD Grove (white on blue)
+3. Chainable RGB grove LED
+
+# Software Dependencies
+1. MQTT Broker (Mosquitto)
+2. Arduino IDE
 
 ## Prerequisite
 
