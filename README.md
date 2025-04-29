@@ -1,7 +1,14 @@
 # Last Man Standing
 
 # Description 
-
+We set out to develop a game that integrates software and hardware components. Therefore, we decided to implement a version of the 
+"red light, green light" game. Our project uses the WIO SEEED Terminal, a device that combines a display screen with a 
+built-in Arduino-compatible microcontroller. This terminal is connected to an MQTT Broker, a server that handles real-time communication 
+between devices. The core of the gameplay is managed through a web app, which sends commands to start or stop the game. 
+The lights, such as the red light and the green light, are displayed using a single LED, and the sounds that will alert the user 
+will be tracked through the WIO Terminal device. To detect players' movement during the "red light" phase, we integrated an
+Ultrasonic Sensor with the WIO Terminal. If the system detects a movement during a red light, a message on the WIO terminal screen 
+states that the game has ended.
 
 # Hardware list
 1. UltraSonic sensor
@@ -47,7 +54,6 @@ To import these libraries, follow the instructions.
 4. Insert the following link:
    [https://arduino.esp8266.com/stable/package_esp8266com_index.json,https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json]
 
-## Setup
 
 ### For wifi connection
 
