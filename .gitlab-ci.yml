@@ -27,7 +27,7 @@ setup-arduino:
   script:
     - echo "Installing The Arduino CLI..."
     - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-    - export  PATH ="$PWD/bin:$PATH"
+    - export PATH="$PWD/bin:$PATH"
     - which arduino-cli
     - arduino-cli config init |true
     - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
