@@ -72,8 +72,6 @@ build-job:
 
 deploy-job:
   stage: deploy
-  tags:
-    - node20
   script: 
     - echo "Deploying the app..."
   artifacts:
