@@ -1,10 +1,10 @@
-##Descripition:
+## Description:
 - Add description of the issues.
 
-##User Story:
+## User Story:
 - Add the user story here.
 
-##Acceptance Criteria:
+## Acceptance Criteria:
 - Add the acceptance criteria here,
 
 ## Contribution:
