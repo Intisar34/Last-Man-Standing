@@ -28,7 +28,7 @@ before_script:
 install-dependencies:
   stage: install
   tags:
-    - node20
+    - shell
   script:
     - echo "Installing dependencies..."
     - npm install -g yarn
@@ -43,7 +43,7 @@ install-dependencies:
 test-job:
   stage: test
   tags:
-    - node20
+    - shell
   script:
     - echo "Running tests..."
     - npm test
@@ -55,7 +55,7 @@ test-job:
 build-job:
   stage: build
   tags:
-    - node20
+    - docker-build
   script: 
     - echo "Building for production..."
     - npm run build
@@ -72,6 +72,8 @@ build-job:
 
 deploy-job:
   stage: deploy
+  tags:
+    - docker
   script: 
     - echo "Deploying the app..."
   artifacts:
