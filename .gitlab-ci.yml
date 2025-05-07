@@ -45,7 +45,6 @@ install-dependencies:
     - docker
   script:
     - echo "Installing dependencies..."
-    - npm install -g yarn
     - npm install react react-dom react-native-web
     - npm install react-scripts
     - npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader html-webpack-plugin
