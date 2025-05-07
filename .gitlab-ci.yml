@@ -40,9 +40,9 @@ setup-arduino:
     - arduino-cli lib install TFT_eSPI
     - arduino-cli lib install  --git-url https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi
     - arduino-cli lib install  --git-url https://github.com/ErickSimoes/Ultrasonic
-    - arduino-cli lib install Grove_LCD_RGB_Backlight
+    - arduino-cli lib install  --git-url https://github.com/Seeed-Studio/Grove_LCD_RGB_Backlight
     - arduino-cli lib install --git-url https://github.com/Seeed-Studio/Grove_Chainable_RGB_LED
-    - arduino-cli lib install ArduinoMqttClient
+    - arduino-cli lib install  --git-url https://github.com/arduino-libraries/ArduinoMqttClient
 
   cache:
     paths:
