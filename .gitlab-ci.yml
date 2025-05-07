@@ -50,7 +50,8 @@ install-dependencies:
     - npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader html-webpack-plugin
     - npm install @babel/core @babel/preset-env @babel/preset-react
     - npm install react-router-dom
-    - npm install react-navigation/native @react-navigation/native-stack
+    - npm install @react-navigation/native @react-navigation/native-stack
+    
   
 
 test-job:
