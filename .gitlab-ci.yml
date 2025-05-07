@@ -16,7 +16,7 @@ stages:
 
 before_script: 
   - echo "Installing the arduino CLI..."
-  - apt-get update && apt-get install -y curl unzip xz-utils
+  - sudo apt-get update && sudo apt-get install -y curl unzip xz-utils
   - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
   - export PATH="$HOME/bin:$PATH"
   - arduino-cli config init
