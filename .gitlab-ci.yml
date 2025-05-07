@@ -34,12 +34,6 @@ setup-arduino:
     - arduino-cli core update-index
     - arduino-cli core install Seeeduino:samd
     - arduino-cli core search wio
-    - arduino-cli lib install TFT_eSPI
-    - arduino-cli lib install Seeed_Arduino_rpcWiFi
-    - arduino-cli lib install Ultrasonic
-    - arduino-cli lib install Grove_LCD_RGB_Backlight
-    - arduino-cli lib install --git-url https://github.com/Seeed-Studio/Grove_Chainable_RGB_LED
-    - arduino-cli lib install ArduinoMqttClient
 
   cache:
     paths:
@@ -60,7 +54,13 @@ install-dependencies:
     - npm install react-router-dom
     - npm install @react-navigation/native @react-navigation/native-stack
     - echo "Installing Arduino Libraries"
-
+    - export PATH = "$CI_PROJECT_DIR/bin:$PATH)"
+    - arduino-cli lib install TFT_eSPI
+    - arduino-cli lib install Seeed_Arduino_rpcWiFi
+    - arduino-cli lib install Ultrasonic
+    - arduino-cli lib install Grove_LCD_RGB_Backlight
+    - arduino-cli lib install --git-url https://github.com/Seeed-Studio/Grove_Chainable_RGB_LED
+    - arduino-cli lib install ArduinoMqttClient
 
 
 
