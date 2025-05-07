@@ -16,24 +16,32 @@ stages:
 - deploy
 
 before_script: 
-  - echo "Installing the dependencies"
+  - echo "Installing and Setting up Arduino CLI Globally"
   - sudo apt-get update && sudo apt-get install -y curl unzip xz-utils
-
+  - echo "Installing The Arduino CLI..."
+  - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+  - export PATH="$PWD/bin:$PATH"
+  - which arduino-cli
+  - arduino-cli config init || true
 
 setup-arduino:
   stage: setup
   tags:
     - shell
   script:
-    - echo "Installing The Arduino CLI..."
-    - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-    - export PATH="$PWD/bin:$PATH"
-    - which arduino-cli
-    - arduino-cli config init || true
     - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
     - arduino-cli core update-index
     - arduino-cli core install Seeeduino:samd
     - arduino-cli core search wio
+    - echo "Installing Arduino Libraries"
+    - export PATH="$CI_PROJECT_DIR/bin:$PATH"
+    - which arduino-cli
+    - arduino-cli lib install TFT_eSPI
+    - arduino-cli lib install Seeed_Arduino_rpcWiFi
+    - arduino-cli lib install Ultrasonic
+    - arduino-cli lib install Grove_LCD_RGB_Backlight
+    - arduino-cli lib install --git-url https://github.com/Seeed-Studio/Grove_Chainable_RGB_LED
+    - arduino-cli lib install ArduinoMqttClient
 
   cache:
     paths:
