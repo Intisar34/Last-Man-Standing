@@ -15,14 +15,8 @@ stages:
 - deploy
 
 before_script: 
-  - echo "Installing the arduino CLI..."
+  - echo "Installing the dependencies"
   - sudo apt-get update && sudo apt-get install -y curl unzip xz-utils
-  - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-  - export PATH="$HOME/bin:$PATH"
-  - arduino-cli config init
-  - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
-  - arduino-cli core update-index
-  - arduino-cli core install Seeeduino:samd
 
   
 install-dependencies:
@@ -30,6 +24,14 @@ install-dependencies:
   tags:
     - shell
   script:
+  - echo "Installing the arduino CLI..."
+  - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+  - export PATH="$PWD/bin:$PATH"
+  - arduino-cli config init
+  - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+  - arduino-cli core update-index
+  - arduino-cli core install Seeeduino:samd
+
     - echo "Installing dependencies..."
     - npm install -g yarn
     - npm install react react-dom react-native-web
