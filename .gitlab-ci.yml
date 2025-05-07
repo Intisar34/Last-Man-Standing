@@ -33,6 +33,8 @@ setup-arduino:
     - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
     - arduino-cli core update-index
     - arduino-cli core install Seeeduino:samd
+    - arduino-cli core search wio
+
   cache:
     paths:
       - bin/
@@ -44,13 +46,25 @@ install-dependencies:
   tags:
     - docker
   script:
-    - echo "Installing dependencies..."
+    - echo "Installing npm dependencies..."
     - npm install react react-dom react-native-web
     - npm install react-scripts
     - npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader html-webpack-plugin
     - npm install @babel/core @babel/preset-env @babel/preset-react
     - npm install react-router-dom
     - npm install @react-navigation/native @react-navigation/native-stack
+    - echo "Installing Arduino Libraries"
+    - arduino-cli lib install TFT_eSPI
+    - arduino-cli lib install Seeed_Arduino_rpcWiFi
+    - arduino-cli lib install Ultrasonic
+    - arduino-cli lib install Grove_LCD_RGB_Backlight
+    - arduino-cli lib install --git-url https://github.com/Seeed-Studio/Grove_Chainable_RGB_LED
+    - arduino-cli lib install ArduinoMqttClient
+
+
+
+
+
     
   
 
