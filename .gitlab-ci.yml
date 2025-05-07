@@ -9,6 +9,7 @@
 image: node:20
 
 stages:
+- setup
 - install
 - test
 - build
@@ -19,20 +20,29 @@ before_script:
   - apt-get update && apt-get install -y curl unzip xz-utils
 
 
+setup-arduino:
+  stage: setup
+  tags:
+    - shell
+  script:
+    - echo "Installing The Arduino CLI..."
+    - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+    - export  PATH ="$PWD/bin:$PATH"
+    - which arduino-cli
+    - arduino-cli config init |true
+    - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+    - arduino-cli core update-index
+    - arduino-cli core install Seeeduino:samd
+
+  cache:
+    paths:
+      - bin/
   
 install-dependencies:
   stage: install
   tags:
-    - shell
+    - docker
   script:
-    - echo "Installing the arduino CLI..."
-    - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-    - export PATH="$PWD/bin:$PATH"
-    - which arduino-cli
-    - arduino-cli config init || true
-    - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
-    - arduino-cli core update-index
-    - arduino-cli core install Seeeduino:samd
     - echo "Installing dependencies..."
     - npm install -g yarn
     - npm install react react-dom react-native-web
@@ -46,7 +56,7 @@ install-dependencies:
 test-job:
   stage: test
   tags:
-    - shell
+    - docker
   script:
     - echo "Running tests..."
     - npm test
