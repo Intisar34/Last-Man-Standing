@@ -55,6 +55,7 @@ install-dependencies:
     - npm install @react-navigation/native @react-navigation/native-stack
     - echo "Installing Arduino Libraries"
     - export PATH="$CI_PROJECT_DIR/bin:$PATH"
+    - which arduino-cli
     - arduino-cli lib install TFT_eSPI
     - arduino-cli lib install Seeed_Arduino_rpcWiFi
     - arduino-cli lib install Ultrasonic
