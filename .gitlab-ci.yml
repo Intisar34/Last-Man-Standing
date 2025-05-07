@@ -29,13 +29,14 @@ setup-arduino:
   tags:
     - shell
   script:
+    - export PATH="$CI_PROJECT_DIR/bin:$PATH"
+    - which arduino-cli
     - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
     - arduino-cli core update-index
     - arduino-cli core install Seeeduino:samd
     - arduino-cli core search wio
+    - arduino-cli config set library.enable_unsafe_install true
     - echo "Installing Arduino Libraries"
-    - export PATH="$CI_PROJECT_DIR/bin:$PATH"
-    - which arduino-cli
     - arduino-cli lib install TFT_eSPI
     - arduino-cli lib install  --git-url https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi
     - arduino-cli lib install  --git-url https://github.com/ErickSimoes/Ultrasonic
