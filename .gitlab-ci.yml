@@ -5,9 +5,77 @@
 # Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+
+image: node:20
+
 stages:
+- install
 - test
-sast:
+- build
+- deploy
+
+before_script: 
+  - echo "Installing the arduino CLI..."
+  - apt-get update && apt-get install -y curl unzip xz-utils
+  - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+  - export PATH="$HOME/bin:$PATH"
+  - arduino-cli config init
+  - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+  - arduino-cli core update-index
+  - arduino-cli core install Seeeduino:samd
+
+  
+install-dependencies:
+  stage: install
+  script:
+    - echo "Installing dependencies..."
+    - npm install -g yarn
+    - npm install react react-dom react-native-web
+    - npm install react-scripts
+    - npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader html-webpack-plugin
+    - npm install @babel/core @babel/preset-env @babel/preset-react
+    - npm install react-router-dom
+    - npm install react-navigation/native @react-navigation/native-stack
+  
+
+test-job:
   stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
+  script:
+    - echo "Running tests..."
+    - npm test
+  only: 
+    - development
+    - main
+
+
+build-job:
+  stage: build
+  script: 
+    - echo "Building for production..."
+    - npm run build
+    - mv dist public
+  artifacts:
+    paths: 
+      - public
+    when: on_success
+    access: all
+    expire_in: 30 days
+  only:
+      - main 
+    
+
+deploy-job:
+  stage: deploy
+  script: 
+    - echo "Deploying the app..."
+  artifacts:
+    paths: 
+      - public
+  dependencies:
+    - build-job
+  only: 
+    - main 
+
+
+
+
