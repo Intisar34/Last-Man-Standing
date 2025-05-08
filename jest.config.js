@@ -1,4 +1,5 @@
 module.exports = {
+  preset: 'react-native',
   testEnvironment: 'jest-environment-jsdom',
   testMatch: [
     "**/__tests__/**/*.js",
@@ -9,7 +10,11 @@ module.exports = {
     "^.+\\.tsx?$": "babel-jest"
   },
   transformIgnorePatterns: [
-    "/node_modules/(?!@react-native|react-native|react-navigation)/",
+    'node_modules/(?!(react-native|react-native-web|@react-native|@react-navigation|expo|@expo|@unimodules|unimodules|sentry-expo)/)',
   ],
-  moduleFileExtensions: ["js", "jsx", "ts", "tsx", "json", "node"]
+  moduleFileExtensions: ["js", "jsx", "ts", "tsx", "json", "node"],
+  setupFilesAfterEnv: [
+    './jest.setup.js',
+    '@testing-library/jest-native/extend-expect'],
+
 };
