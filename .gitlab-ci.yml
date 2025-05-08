@@ -80,6 +80,7 @@ test-job:
   only: 
     - development
     - main
+    - ci-pipeline
 
 
 build-job:
@@ -100,6 +101,8 @@ build-job:
     expire_in: 30 days
   only:
       - main 
+      - ci-pipeline
+
     
 
 deploy-job:
