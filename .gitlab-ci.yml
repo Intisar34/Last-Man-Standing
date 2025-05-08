@@ -58,7 +58,7 @@ install-dependencies:
     - npm install react-scripts
     - npm install --save-dev -g babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
     - npm install react-router-dom
-    - npm install --save-dev -g jest
+    - npm install --save-dev jest
     - npm install @react-navigation/native @react-navigation/native-stack
 
 test-job:
@@ -75,6 +75,8 @@ test-job:
   cache:
     paths:
       - node_modules/
+    key: 
+      "$CI_COMMIT_REF_NAME-${CI_COMMIT_SHA}"
 
 build-job:
   stage: build
