@@ -19,21 +19,27 @@ const RestartButton = () => {
     }
   };
 
-  // Page styling and formatting
+
+  // The restart button
   return (
-    <button
-      style={{
-        backgroundColor: '#ffc107',
-        padding: '12px 80px',
-        borderRadius: '10px',
-        color: '#000',
-        border: 'none',
-        cursor: 'pointer',
-        fontSize: '16px',
-        fontWeight: 'bold',
-      }}
-      onClick={sendRestartCommand}>Restart</button>
+    <View style={styles.button}>
+      <Button title="Restart Game" onPress={sendRestartCommand} color="#ffc107"/>
+    </View>
   );
 };
+
+// Page styling and formatting
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#ffc107',
+    paddingVertical: 15,
+    paddingHorizontal: 80,
+    borderRadius: 8,
+    marginTop: 20,
+    alignSelf: 'center',
+  }
+});
+
+
 
 export default RestartButton;
