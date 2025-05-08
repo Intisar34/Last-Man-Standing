@@ -89,7 +89,7 @@ build-job:
     - docker-build
   script: 
     - echo "Building for production..."
-    - npm run build
+    - npm run web:build
     - mv dist public
   artifacts:
     paths: 
