@@ -69,6 +69,8 @@ test-job:
     - echo "Running tests..."
     - npm install --save-dev babel-plugin-react-native-web
     - npm install --save-dev jest babel-jest react-test-renderer jest-environment-jsdom
+    - echo "Verifying if @testing-library packages are installed..."
+    - ls node_modules/@testing-library/ 
     - npm test
   only:
     - development
