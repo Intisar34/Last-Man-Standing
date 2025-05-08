@@ -1,5 +1,6 @@
 module.exports = {
-    preset: 'react-native',
+    preset: '@react-native-community/jest-preset',
+    testEnvironment: 'node',
     testMatch: [
         "**/_test_/**/*.js",
         "**/?(*.)+(spec|test).js",
