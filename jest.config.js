@@ -1,7 +1,7 @@
 module.exports = {
     preset: 'react-native',
     testMatch: [
-        "**/test/**/*.js",
+        "**/_test_/**/*.js",
         "**/?(*.)+(spec|test).js",
     ], 
     transform: {
