@@ -58,8 +58,13 @@ install-dependencies:
     - npm install react-scripts
     - npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
     - npm install react-router-dom
+    - npm install --save-dev babel-plugin-react-native-web
+    - npm install --save-dev jest babel-jest react-test-renderer jest-environment-jsdom
     - npm install @react-navigation/native @react-navigation/native-stack
     - npm install --save-dev @testing-library/react-native @testing-library/react
+  artifacts:
+    paths: 
+      - node_modules/
 
 test-job:
   stage: test
@@ -67,8 +72,6 @@ test-job:
     - docker
   script:
     - echo "Running tests..."
-    - npm install --save-dev babel-plugin-react-native-web
-    - npm install --save-dev jest babel-jest react-test-renderer jest-environment-jsdom
     - echo "Verifying if @testing-library packages are installed..."
     - ls node_modules/@testing-library/ 
     - npm test
