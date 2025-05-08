@@ -88,7 +88,7 @@ build-job:
     - docker
   script: 
     - echo "Installing the webpack ..."
-    - npm install -g webpack webpack-cli
+    - npm install webpack webpack-cli
     - echo "Building for production..."
     - npm run web:build
     - mv dist public
