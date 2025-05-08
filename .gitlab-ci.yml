@@ -67,7 +67,6 @@ test-job:
   script:
     - echo "Running tests..."
     - npm install --save-dev jest babel-jest react-test-renderer jest-environment-jsdom
-    - npm install --save-dev @testing-library/react
     - npm test
   only:
     - development
