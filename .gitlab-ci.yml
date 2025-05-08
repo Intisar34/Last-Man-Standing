@@ -56,7 +56,7 @@ install-dependencies:
     - echo "Installing npm dependencies..."
     - npm install react react-dom react-native-web
     - npm install react-scripts
-    - npm install --save-dev -g babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
+    - npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
     - npm install react-router-dom
     - npm install --save-dev jest babel-jest react-test-renderer
     - npm install @react-navigation/native @react-navigation/native-stack
