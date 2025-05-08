@@ -9,13 +9,13 @@
 image: node:20
 
 stages:
-- setup
-- install
-- test
-- build
-- deploy
+  - setup
+  - install
+  - test
+  - build
+  - deploy
 
-before_script: 
+before_script:
   - echo "Installing and Setting up Arduino CLI Globally"
   - sudo apt-get update && sudo apt-get install -y curl unzip xz-utils
   - echo "Installing The Arduino CLI..."
@@ -48,8 +48,6 @@ setup-arduino:
     paths:
       - bin/
 
-
-  
 install-dependencies:
   stage: install
   tags:
@@ -60,15 +58,8 @@ install-dependencies:
     - npm install react-scripts
     - npm install --save-dev -g babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
     - npm install react-router-dom
+    - npm install --save-dev jest
     - npm install @react-navigation/native @react-navigation/native-stack
-
-
-
-
-
-
-    
-  
 
 test-job:
   stage: test
@@ -77,45 +68,46 @@ test-job:
   script:
     - echo "Running tests..."
     - npm test
-  only: 
+  only:
     - development
     - main
-
+    - ci-pipeline
+  cache:
+    paths:
+      - node_modules/
 
 build-job:
   stage: build
   tags:
     - docker
-  script: 
+  script:
     - echo "Installing the webpack ..."
     - npm install webpack webpack-cli
     - echo "Building for production..."
     - npm run web:build
     - mv dist public
   artifacts:
-    paths: 
+    paths:
       - /dist
     when: on_success
     access: all
     expire_in: 30 days
   only:
-      - main 
-    
+    - main
+    - development
+    - main
+    - ci-pipeline
 
 deploy-job:
   stage: deploy
   tags:
     - docker
-  script: 
+  script:
     - echo "Deploying the app..."
   artifacts:
-    paths: 
+    paths:
       - public
   dependencies:
     - build-job
-  only: 
-    - main 
-
-
-
-
+  only:
+    - main
