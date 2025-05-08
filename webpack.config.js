@@ -14,6 +14,9 @@ module.exports = {
       'react-native$': 'react-native-web',
     },
     extensions: ['.web.js', '.js', '.json'],
+    fallback: {
+      path:false,
+    }
   },
   module: {
     rules: [

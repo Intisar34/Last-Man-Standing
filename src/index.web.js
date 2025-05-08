@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native';
 import App from '../App.js';
-import appJson from '../app.config.js';
+import appJson from '../config.json';
 const { name: appName } = appJson;
 
 AppRegistry.registerComponent(appName, () => App);
