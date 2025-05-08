@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest",
+    "test": "jest",
     "start": "webpack serve --mode development",
     "web:build": "webpack --mode production",
     "web:start": "webpack serve --mode development --open"
