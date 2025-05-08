@@ -59,6 +59,7 @@ install-dependencies:
     - npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
     - npm install react-router-dom
     - npm install @react-navigation/native @react-navigation/native-stack
+    - npm install --save-dev @testing-library/react-native
 
 test-job:
   stage: test
