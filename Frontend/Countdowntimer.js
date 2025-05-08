@@ -29,7 +29,7 @@ export default function Countdown() {
     };
   }, []);
 
-  
+// countdown logic 
   useEffect(() => {
     if (count === 0) return;
     let timer = setTimeout(() => {
