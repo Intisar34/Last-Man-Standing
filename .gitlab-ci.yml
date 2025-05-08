@@ -66,6 +66,7 @@ test-job:
     - docker
   script:
     - echo "Running tests..."
+    - npm install --save-dev babel-plugin-react-native-web
     - npm install --save-dev jest babel-jest react-test-renderer jest-environment-jsdom
     - npm test
   only:
