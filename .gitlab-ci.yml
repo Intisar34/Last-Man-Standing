@@ -58,8 +58,8 @@ install-dependencies:
     - echo "Installing npm dependencies..."
     - npm install react react-dom react-native-web
     - npm install react-scripts
-    - npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader html-webpack-plugin
-    - npm install @babel/core @babel/preset-env @babel/preset-react
+    - npm install --save-dev -g babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
+    - npm install -g @babel/core @babel/preset-env @babel/preset-react
     - npm install react-router-dom
     - npm install @react-navigation/native @react-navigation/native-stack
 
@@ -93,7 +93,7 @@ build-job:
     - mv dist public
   artifacts:
     paths: 
-      - public
+      - /dist
     when: on_success
     access: all
     expire_in: 30 days
