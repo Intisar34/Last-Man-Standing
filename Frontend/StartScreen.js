@@ -43,14 +43,13 @@ const StartScreen = () => {
   };
   // Page layout
   return (
-    <div style={styles.background}>
-      <h1 style={styles.header}>Last Man Standing</h1>
-      <div style={styles.buttonGroup}>
+    <View style={styles.background}>
+      <Text style={styles.header}>Last Man Standing</Text>
+      <View style={styles.button}>
         {gameState === 'not_started' && (
-          <button style={{ ...styles.button, backgroundColor: '#28a745' }}
-            onClick={startGame}>Start Game</button>)}
-      </div>
-    </div>
+          <Button title="Start Game" onPress={startGame} color= '#28a745'/>)}
+      </View>
+    </View>
   );
 };
 
@@ -77,13 +76,13 @@ const styles = {
     gap: '20px',
   },
   button: {
-    color: '#fff',
-    padding: '12px 80px',
-    fontSize: '16px',
-    border: 'none',
-    borderRadius: '10px',
-    cursor: 'pointer',
-  },
+    backgroundColor: '#28a745',
+    paddingVertical: 15,
+    paddingHorizontal: 80,
+    borderRadius: 8,
+    marginTop: 20,
+    alignSelf: 'center',
+  }
 };
 
 export default StartScreen;
