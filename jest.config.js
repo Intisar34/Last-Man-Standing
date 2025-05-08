@@ -1,5 +1,9 @@
 module.exports = {
-    preset: 'react-native',  
+    preset: 'react-native',
+    testMatch: [
+        "**/test/**/*.js",
+        "**/?(*.)+(spec|test).js",
+    ], 
     transform: {
       "^.+\\.jsx?$": "babel-jest",  
       "^.+\\.tsx?$": "babel-jest",  
