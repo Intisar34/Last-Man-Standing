@@ -59,7 +59,6 @@ install-dependencies:
     - npm install react react-dom react-native-web
     - npm install react-scripts
     - npm install --save-dev -g babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
-    - npm install -g @babel/core @babel/preset-env @babel/preset-react
     - npm install react-router-dom
     - npm install @react-navigation/native @react-navigation/native-stack
 
