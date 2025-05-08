@@ -6,8 +6,8 @@ module.exports = {
     "**/?(*.)+(spec|test).js",
   ],
   transform: {
-    "^.+\\.jsx?$": "babel-jest",
-    "^.+\\.tsx?$": "babel-jest"
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(js|jsx)$': 'babel-jest',
   },
   transformIgnorePatterns: [
     'node_modules/(?!(react-native|react-native-web|@react-native|@react-navigation|expo|@expo|@unimodules|unimodules|sentry-expo)/)',
