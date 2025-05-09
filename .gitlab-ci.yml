@@ -5,9 +5,74 @@
 # Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+
+image: node:20
+
 stages:
-- test
-sast:
+  - setup
+  - build
+  - test
+
+before_script:
+  - echo "Installing and Setting up Arduino CLI Globally"
+  - sudo apt-get update && sudo apt-get install -y curl unzip xz-utils
+  - echo "Installing The Arduino CLI..."
+  - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+  - export PATH="$PWD/bin:$PATH"
+  - which arduino-cli
+  - arduino-cli config init || true
+
+setup-arduino:
+  stage: setup
+  tags:
+    - shell
+  script:
+    - export PATH="$CI_PROJECT_DIR/bin:$PATH"
+    - which arduino-cli
+    - arduino-cli config add board_manager.additional_urls https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+    - arduino-cli core update-index
+    - arduino-cli core install Seeeduino:samd
+    - arduino-cli core search wio
+    - arduino-cli config set library.enable_unsafe_install true
+    - echo "Installing Arduino Libraries"
+    - arduino-cli lib install TFT_eSPI
+    - arduino-cli lib install  --git-url https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi
+    - arduino-cli lib install  --git-url https://github.com/ErickSimoes/Ultrasonic
+    - arduino-cli lib install  --git-url https://github.com/Seeed-Studio/Grove_LCD_RGB_Backlight
+    - arduino-cli lib install --git-url https://github.com/Seeed-Studio/Grove_Chainable_RGB_LED
+    - arduino-cli lib install  --git-url https://github.com/arduino-libraries/ArduinoMqttClient
+  cache:
+    paths:
+      - bin/
+
+build-job:
+  stage: build
+  tags: 
+    - docker
+  script:
+    - echo "Installing dependencies..."
+    - npm install
+    - echo "Building app..."
+    - npm run web:build
+    - mkdir -p public && mv dist public
+  artifacts:
+    paths: 
+      - public/
+    when: on_success
+  only:
+    - development
+    - ci-pipeline
+
+
+test-job:
   stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
+  tags:
+    - docker
+  script:
+    - echo "Running tests..."
+    - npm test || true
+  only:
+    - development
+    - ci-pipeline
+ 
+
