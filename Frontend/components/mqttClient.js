@@ -1,7 +1,7 @@
 // mqttClient.js
 import mqtt from 'mqtt';
 
-const MQTT_BROKER = 'ws://172.20.10.3:9001';
+const MQTT_BROKER = 'ws://<ip_adress>:9001';
 const MQTT_TOPIC = 'game/command';
 
 const client = mqtt.connect(MQTT_BROKER);
