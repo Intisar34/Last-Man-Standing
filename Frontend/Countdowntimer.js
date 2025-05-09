@@ -1,34 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { View,StyleSheet} from 'react-native';
-import RestartButton from './RestartButton';
-import mqtt from "mqtt"
+import RestartButton from './components/RestartButton';
+import { mqtt_client, game_topic } from './components/mqttClient';
 
-
+//subscribing to the
 export default function Countdown() {
   const [count, setCount] = useState(90);
-  useEffect(() => {
-    const mqttClient = mqtt.connect("ws://172.20.10.5:9001");
-    
-    mqttClient.on("connect", () => {
-      mqttClient.subscribe("game/command");
-    });
 
-    mqttClient.on("message", (topic, message) => {
-      const connect = message.toString();
-      if (topic === "game/command") {
-        if (connect === "start")
+  useEffect(() => {
+    mqtt_client.subscribe(game_topic);
+    
+    mqtt_client.on("message", (topic, message) => {
+      const command = message.toString();
+       if (topic === game_topic) {
+        if (command === "start")
           setCount(90);
-        else if (connect === "restart") {
+        else if (command === "restart") {
           setCount(90);
         }
       }
     });
 
     return () => {
-      mqttClient.end();
+      mqtt_client.unsubscribe(game_topic);
     };
   }, []);
-
 // countdown logic 
   useEffect(() => {
     if (count === 0) return;
