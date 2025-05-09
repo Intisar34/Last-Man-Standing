@@ -10,10 +10,8 @@ image: node:20
 
 stages:
   - setup
-  - install
-  - test
   - build
-  - deploy
+  - test
 
 before_script:
   - echo "Installing and Setting up Arduino CLI Globally"
@@ -43,28 +41,27 @@ setup-arduino:
     - arduino-cli lib install  --git-url https://github.com/Seeed-Studio/Grove_LCD_RGB_Backlight
     - arduino-cli lib install --git-url https://github.com/Seeed-Studio/Grove_Chainable_RGB_LED
     - arduino-cli lib install  --git-url https://github.com/arduino-libraries/ArduinoMqttClient
-
   cache:
     paths:
       - bin/
 
-install-dependencies:
-  stage: install
-  tags:
+build-job:
+  stage: build
+  tags: 
     - docker
   script:
-    - echo "Installing npm dependencies..."
-    - npm install react react-dom react-native-web
-    - npm install react-scripts
-    - npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react metro-react-native-babel-preset html-webpack-plugin
-    - npm install react-router-dom
-    - npm install --save-dev babel-plugin-react-native-web
-    - npm install --save-dev jest babel-jest react-test-renderer jest-environment-jsdom
-    - npm install @react-navigation/native @react-navigation/native-stack
-    - npm install --save-dev @testing-library/react-native @testing-library/react
+    - echo "Installing dependencies..."
+    - npm install
+    - echo "Building app...""
+    - npm run web:build
+    - mkdir -p public && mv dist public
   artifacts:
     paths: 
-      - node_modules/
+      - public/
+    when: on_success
+  only:
+    - development
+    - ci-pipeline
 
 
 test-job:
@@ -76,46 +73,6 @@ test-job:
     - npm test || true
   only:
     - development
-    - main
     - ci-pipeline
-  cache:
-    paths:
-      - node_modules/
-    key: 
-      "$CI_COMMIT_REF_NAME-${CI_COMMIT_SHA}"
+ 
 
-build-job:
-  stage: build
-  tags:
-    - docker
-  script:
-    - echo "Installing the webpack ..."
-    - npm install webpack webpack-cli
-    - echo "Building for production..."
-    - npm run web:build
-    - mv dist public
-  artifacts:
-    paths:
-      - /dist
-    when: on_success
-    access: all
-    expire_in: 30 days
-  only:
-    - main
-    - development
-    - main
-    - ci-pipeline
-
-deploy-job:
-  stage: deploy
-  tags:
-    - docker
-  script:
-    - echo "Deploying the app..."
-  artifacts:
-    paths:
-      - public
-  dependencies:
-    - build-job
-  only:
-    - main
