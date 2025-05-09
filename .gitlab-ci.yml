@@ -57,14 +57,13 @@ build-job:
     - npm install
     - echo "Building app..."
     - npm run web:build
-    - mkdir -p public && mv dist public
   artifacts:
     paths: 
       - public/
     when: on_success
   only:
     - development
-    - ci-pipeline
+    - 16-set-up-pipeline
 
 # Testing specific components/functions
 test-job:
@@ -76,6 +75,4 @@ test-job:
     - npm test || true
   only:
     - development
-    - ci-pipeline
- 
-
+    - 16-set-up-pipeline
