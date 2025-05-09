@@ -52,7 +52,7 @@ build-job:
   script:
     - echo "Installing dependencies..."
     - npm install
-    - echo "Building app...""
+    - echo "Building app..."
     - npm run web:build
     - mkdir -p public && mv dist public
   artifacts:
