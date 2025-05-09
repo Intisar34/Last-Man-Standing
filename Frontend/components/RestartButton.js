@@ -1,24 +1,13 @@
 // Libraries
 import React from 'react';
-import mqtt from 'mqtt';
-import {Dimensions} from 'react-native';
-
-// MQTT connection 
-const MQTT_BROKER = 'ws://172.20.10.3:9001';
-const MQTT_TOPIC = 'game/command';
-const client = mqtt.connect(MQTT_BROKER);
+import { sendCommand } from './mqttClient';
 
 
 // Handles mqtt and restart signal commands
 const RestartButton = () => {
   const sendRestartCommand = () => {
-    if (client.connected) {
-      client.publish(MQTT_TOPIC, 'restart');
-    } else {
-      alert('ERROR: MQTT Not Connected.');
-    }
+    sendCommand('restart');
   };
-
 
   // The restart button
   return (
