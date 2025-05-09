@@ -13,6 +13,7 @@ stages:
   - build
   - test
 
+# Installing Arduino CLI
 before_script:
   - echo "Installing and Setting up Arduino CLI Globally"
   - sudo apt-get update && sudo apt-get install -y curl unzip xz-utils
@@ -22,6 +23,7 @@ before_script:
   - which arduino-cli
   - arduino-cli config init || true
 
+# Setting up the aurdino with necessary libraries
 setup-arduino:
   stage: setup
   tags:
@@ -45,6 +47,7 @@ setup-arduino:
     paths:
       - bin/
 
+# Building the app with dependencies for future tests and deployment.
 build-job:
   stage: build
   tags: 
@@ -63,7 +66,7 @@ build-job:
     - development
     - ci-pipeline
 
-
+# Testing specific components/functions
 test-job:
   stage: test
   tags:
