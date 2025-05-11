@@ -5,7 +5,7 @@ module.exports = {
   mode: 'production',
   entry: './src/index.web.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.[contenthash].js', 
     clean: true, 
   },
@@ -42,7 +42,7 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: './dist',
+    static: './public',
     port: 3000,
   },
 };

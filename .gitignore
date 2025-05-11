@@ -16,3 +16,4 @@ Thumbs.db
 *.cpp
 *.o
 node_modules
+public/
