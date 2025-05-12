@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 import { useNavigate } from 'react-router-dom';
 
-const RegisterScreen = ({ navigate }) => {
+const RegisterScreen = () => {
+
   const [form, setForm] = useState({
     username: "",
     email: "",
