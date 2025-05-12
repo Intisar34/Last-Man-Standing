@@ -18,6 +18,8 @@ const char topic[]  = "game/command";
 
 String message = "";
 
+
+//Handles MQTT connectivity 
 void mqttSetup() {
   Serial.begin(9600);
   while (!Serial) {
@@ -71,7 +73,7 @@ void onMqttMessage(int messageSize) {
   Serial.println();
 }
 
-
+//Starts the game in the hardware components once message received 
 void checkMqttCommands() {
    if (message == "start") {
     timer = 90; 
