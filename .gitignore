@@ -13,7 +13,7 @@ Thumbs.db
 .vscode/
 
 
-*.cpp
+
 *.o
 node_modules
 public/
