@@ -50,7 +50,7 @@ setup-arduino:
 # Building the app with dependencies for future tests and deployment.
 build-job:
   stage: build
-  tags: 
+  tags:
     - docker
   script:
     - echo "Installing dependencies..."
@@ -58,12 +58,11 @@ build-job:
     - echo "Building app..."
     - npm run web:build
   artifacts:
-    paths: 
+    paths:
       - public/
     when: on_success
   only:
     - development
-    - 16-set-up-pipeline
 
 # Testing specific components/functions
 test-job:
@@ -75,4 +74,4 @@ test-job:
     - npm test || true
   only:
     - development
-    - 16-set-up-pipeline
+    - main
