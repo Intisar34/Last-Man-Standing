@@ -10,6 +10,7 @@ void LCDsetup() {
   lcd.begin(16, 2);
 }
 
+//Handles the countdown logic
 void countdown() {
   if (timer >= 0 && (millis() - timerUpdate >= 1000)) {
     timerUpdate = millis();
