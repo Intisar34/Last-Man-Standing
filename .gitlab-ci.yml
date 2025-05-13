@@ -61,9 +61,6 @@ build-job:
     paths:
       - public/
     when: on_success
-  only:
-    - development
-    - 23-fix-pipeline
 
 # Testing specific components/functions
 test-job:
@@ -73,7 +70,3 @@ test-job:
   script:
     - echo "Running tests..."
     - npm test || true
-  only:
-    - development
-    - 23-fix-pipeline
-    - main
