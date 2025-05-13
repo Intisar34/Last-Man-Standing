@@ -63,6 +63,7 @@ build-job:
     when: on_success
   only:
     - development
+    - 23-fix-pipeline
 
 # Testing specific components/functions
 test-job:
@@ -74,4 +75,5 @@ test-job:
     - npm test || true
   only:
     - development
+    - 23-fix-pipeline
     - main
