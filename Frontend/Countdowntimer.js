@@ -1,83 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { View,StyleSheet} from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import RestartButton from './components/RestartButton';
-import { mqtt_client, game_topic } from './components/mqttClient';
+import FinishButton from './components/FinishButton';
+import LinearGradient from 'react-native-web-linear-gradient';
 
-//subscribing to the
-export default function Countdown() {
-  const [count, setCount] = useState(90);
-
-  useEffect(() => {
-    mqtt_client.subscribe(game_topic);
-    
-    mqtt_client.on("message", (topic, message) => {
-      const command = message.toString();
-       if (topic === game_topic) {
-        if (command === "start")
-          setCount(90);
-        else if (command === "restart") {
-          setCount(90);
-        }
-      }
-    });
-
-    return () => {
-      mqtt_client.unsubscribe(game_topic);
-    };
-  }, []);
-// countdown logic 
-  useEffect(() => {
-    if (count === 0) return;
-    let timer = setTimeout(() => {
-      setCount(count => count - 1);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [count]);
-
+export default function CountdownTimer() {
+    // View components on screen
   return (
-    <View style={styles.container}>
-      <h1 style={styles.count_down}>
-        {timerFormat(count)}
-      </h1>
+    <View style={styles.background}>
+      <LinearGradient  
+        colors={['#FF0000', '#800080', '#0000FF']} // Mix colors for gradient effect
+        style={styles.linearGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}>
+      <Text style={styles.header}>Tick Tock...</Text>
+      <View style={styles.timer_background}>
+      </View>
       <RestartButton />
+      <FinishButton/>
+      </LinearGradient>
     </View>
   );
+
 };
 
-function timerFormat(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-
-  let formatted = "";
-
-  if (minutes < 10) {
-    formatted += "0";
-  }
-  formatted += minutes + ":";
-
-  if (seconds < 10) {
-    formatted += "0";
-  }
-  formatted += seconds;
-
-  return formatted;
-}
- 
-
+// Page format and styling
 const styles = StyleSheet.create({
-    container: {
-      backgroundColor: '#2b5876',
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    count_down: {
-      color: '#fff',
-      font: 'Beachside',
-      fontSize: 50,
-      fontWeight: 'bold',
-    },
-  });
+  background: {
+    height: '100vh',
+    width: '100vw'
+},
+linearGradient: {
+  height: '100vh',
+  width: '100vw',
+  justifyContent: 'center',  
+  alignItems: 'center',       
+  paddingTop: 0,         
+},
+  header: {
+    font: 'Beachside',
+    fontSize: 60,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 20,
+  }
+});
