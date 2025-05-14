@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomeScreen from './Homescreen';
-import RegisterScreen from './RegisterScreen';
+import RegisterScreen from './registerScreen';
 import StartScreen from './StartScreen';
 import Countdowntimer from './Countdowntimer';
 import LoginScreen from './loginScreen';
