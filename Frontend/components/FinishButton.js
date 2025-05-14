@@ -3,10 +3,10 @@ import { View, Button, StyleSheet } from 'react-native';
 import { mqtt_client } from './mqttClient';
 
 // Initialize finish button 
-const FinishButton = () => {
-  const handlePress = () => {
-    // Stop the timer
-    onFinish();
+const FinishButton = ({ currentTime, onFinish }) => {
+    const handlePress = () => {
+      // Stop the timer
+      onFinish();
     
     // Send MQTT command
     mqtt_client.publish('game/command', 'finish');
