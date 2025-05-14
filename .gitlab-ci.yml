@@ -54,15 +54,13 @@ build-job:
     - docker
   script:
     - echo "Installing dependencies..."
-    - npm install
+    - npm install --prefix setup
     - echo "Building app..."
-    - npm run web:build
+    - npm run web:build --prefix setup
   artifacts:
     paths:
       - public/
     when: on_success
-  only:
-    - development
 
 # Testing specific components/functions
 test-job:
@@ -72,6 +70,3 @@ test-job:
   script:
     - echo "Running tests..."
     - npm test || true
-  only:
-    - development
-    - main

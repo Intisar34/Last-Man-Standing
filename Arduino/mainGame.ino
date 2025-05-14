@@ -1,22 +1,25 @@
 #include "displayBuzzerLED.h"
 #include "countdownTimer.h"
+#include "movementDetection.h"
 #include "mqttconnection.h"
 #include <TFT_eSPI.h>
 #include <rgb_lcd.h>
 #include <ChainableLED.h>
 #include "pitches.h"
+#include <Arduino.h>
 
-
-void setup() {
+void setup()
+{
   Serial.begin(9600);
   mqttSetup();
-  LCDsetup(); 
-  BuzzerLEDsetup();                   
+  LCDsetup();
+  BuzzerLEDsetup();
 }
 
-void loop() {
-  mqttClient.poll();      
-  checkMqttCommands();     
+void loop()
+{
+  mqttClient.poll();
+  checkMqttCommands();
   gameLogic();
-  countdown();           
+  countdown();
 }

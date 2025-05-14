@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.web.js',
+  entry: './index.web.js',
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.[contenthash].js', 
@@ -14,6 +14,10 @@ module.exports = {
       'react-native$': 'react-native-web',
     },
     extensions: ['.web.js', '.js', '.json'],
+    modules: [
+    path.resolve(__dirname, 'node_modules'), 
+    'node_modules' 
+  ],
     fallback: {
       path:false,
     }
@@ -26,7 +30,7 @@ module.exports = {
         use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', '@babel/preset-react'], // Use the Babel presets
+              presets: ['@babel/preset-env', '@babel/preset-react'], 
             },}
       },
     ],
