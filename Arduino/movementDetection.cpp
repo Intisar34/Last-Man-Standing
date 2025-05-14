@@ -17,7 +17,8 @@ bool checkDistance()
     float sensitivity = 4.0;
     float current_distance = ultrasonic.MeasureInInches();
     Serial.println(current_distance);
-    if (abs(current_distance - last_distance) > sensitivity)
+    float difference = current_distance - last_distance;
+    if (abs(difference) > sensitivity)
     {
         moved = true;
     }
