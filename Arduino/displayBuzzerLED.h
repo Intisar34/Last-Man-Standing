@@ -16,6 +16,7 @@ extern unsigned long redLightDuration;
 
 extern bool GreenStage;
 extern bool RedStage;
+extern bool isGameOver;
 
 void BuzzerLEDsetup();
 void gameLogic();
@@ -25,6 +26,5 @@ void melody();
 void startGreenStage();
 void startRedStage();
 void gameOver();
-
 
 #endif
