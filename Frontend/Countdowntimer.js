@@ -1,12 +1,62 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated, Text } from 'react-native';
 import RestartButton from './components/RestartButton';
 import FinishButton from './components/FinishButton';
+import { mqtt_client, game_topic } from './components/mqttClient';
 import LinearGradient from 'react-native-web-linear-gradient';
 
+// Initiate functions
 export default function CountdownTimer() {
-  const [time_left] = useState(60);
+  const [time_left, set_time_left] = useState(60);
+  const [stop_timer, setstop_timer] = useState(false); 
   const animation_progress = useRef(new Animated.Value(60)).current;
+
+
+// handle restart MQTT message 
+  useEffect(() => {
+    mqtt_client.subscribe(game_topic);
+    mqtt_client.on("message", (topic, message) => {
+      const command = message.toString();
+      if (topic === game_topic) {
+        if (command === "start") {
+          reset_timer();
+        } else if (command === "restart") {
+          reset_timer();
+        }
+      }
+    });
+
+    return () => {
+      mqtt_client.unsubscribe(game_topic);
+    };
+  }, []);
+
+  const reset_timer = () => { // handle time reset 
+    set_time_left(60);
+    animation_progress.setValue(60);
+  };
+
+// This checks the stop_timer function
+const run_timer = () => {
+  if (time_left === 0 || stop_timer) return;
+  
+  Animated.timing(animation_progress, {
+    toValue: time_left - 1,
+    duration: 1000,
+    useNativeDriver: false,
+  }).start();
+  
+  const timer = setTimeout(() => {
+    set_time_left(current => current - 1);
+  }, 1000);
+
+  return () => clearTimeout(timer); 
+};
+
+// Add handler for finish
+const handleFinish = () => {
+  setstop_timer(true); // This will stop the timer
+};
 
   const get_progress_width = animation_progress.interpolate({ // cconvert seconds into procentage
     inputRange: [0, 60],
@@ -20,23 +70,24 @@ export default function CountdownTimer() {
     else return '#F44336';
   };
 
-    // View components on screen
+  useEffect(run_timer, [time_left]);
+
+// View components on screen
   return (
     <View style={styles.background}>
       <LinearGradient  
-        colors={['#FF0000', '#800080', '#0000FF']} // Mix colors for gradient effect
+        colors={['#FF0000', '#800080', '#0000FF']} 
         style={styles.linearGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}>
-        
       <Text style={styles.header}>Tick Tock...</Text>
       <View style={styles.timer_background}>
-      <Animated.View style={[styles.timer_progress, 
-            { width: get_progress_width,
-              backgroundColor: get_progress_color() }]} />
+        <Animated.View style={[styles.timer_progress, 
+          { width: get_progress_width,
+            backgroundColor: get_progress_color() }]}/>
       </View>
       <RestartButton />
-      <FinishButton currentTime={time_left} onFinish={() => {}}/>
+      <FinishButton currentTime={time_left} onFinish={handleFinish}/>
       </LinearGradient>
     </View>
   );
@@ -74,5 +125,5 @@ linearGradient: {
   timer_progress: {
     height: '100%',
     borderRadius: 15,
-  }
+  },
 });
