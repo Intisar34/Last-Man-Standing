@@ -6,8 +6,8 @@
 #include "countdownTimer.h"
 
 
-char ssid[]    = "Aishaaa";        
-char pass[]    = "AishaAttar";   
+char ssid[]    = "Network_Name";        
+char pass[]    = "Password";   
 
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
@@ -76,12 +76,15 @@ void onMqttMessage(int messageSize) {
 //Starts the game in the hardware components once message received 
 void checkMqttCommands() {
    if (message == "start") {
-    timer = 90; 
+    resetTimer();    
     message = "";
     startGame();
   } else if (message == "restart") {
-    timer = 90;  
+    resetTimer();     
     message = "";
     restartGame();
+  } else if (message == "finish") {
+    stopTimer();    
+    message = "";
   }
 }
