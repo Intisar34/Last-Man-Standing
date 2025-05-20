@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontFamily: 'Arial Black, Impact, Tahoma, Verdana, sans-serif',
+    fontFamily: 'Times New Roman',
     fontWeight: 'bold',
     fontSize: 36,
     color: '#FFFFFF',
