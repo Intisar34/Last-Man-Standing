@@ -1,7 +1,7 @@
 // Libraries
 import React from 'react';
-import { sendCommand } from './mqttClient';
-
+import { View, Button, StyleSheet} from 'react-native';
+import { sendCommand } from '../Backend/mqttClient';
 
 // Handles mqtt and restart signal commands
 const RestartButton = () => {
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   }
 });
-
 
 
 export default RestartButton;
