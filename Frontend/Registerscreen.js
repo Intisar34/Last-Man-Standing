@@ -35,18 +35,19 @@ const RegisterScreen = () => {
         .select('username')
         .eq('username', username);
   
-      if (userExists.length > 0) {
+        // Displays an error if username found
+        if (userExists.length > 0) {
         alert('Username already exists.');
         return;
       }
       
-      // inserts the users infromation into the database
+      //inserts information entered by the user into the database 
       await supabase
       .from('users')
       .insert([{ username, email, phone_number:phonenumber,score }]);
 
       alert(`Welcome to Last Man Standing, ${username}!`);
-      navigate('/startpage');
+      navigate(-1);
     };
 
   return (
