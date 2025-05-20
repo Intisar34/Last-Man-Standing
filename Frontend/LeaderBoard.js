@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react'; 
+import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
 import LinearGradient from "react-native-web-linear-gradient";
+import { useNavigate } from 'react-router-dom';
 
+const LeaderBoardScreen = () => {
+  const navigate = useNavigate();
 
-const LeaderBoardScreen = () => (
+  const goToDifferentPage = () => {
+    navigate('/startpage');
+  };
 
+  return (
     <View style={styles.container}>
       <LinearGradient
         colors={['#FF0000', '#800080', '#0000FF']} 
@@ -12,21 +18,27 @@ const LeaderBoardScreen = () => (
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }} 
       >
-          <Text style={styles.trophy}>🏆</Text> 
-          <Text style={styles.text}>🏅WELCOME TO LEADERBOARD! 🏅</Text>
-      
+        <Text style={styles.trophy}>🏆</Text> 
+        <Text style={styles.text}>🏅WELCOME TO LEADERBOARD! 🏅</Text>
+
         <ScrollView style={styles.table}>
           <View style={styles.row}>
             <Text style={[styles.header, { flex: 2 }]}>Username</Text>
             <Text style={[styles.header, { flex: 1, textAlign: 'right' }]}>Score</Text>
           </View>
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>
-              No scores to display yet.
-            </Text>
+
+          <Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>
+            No scores to display yet.
+          </Text>
+
+          <View style={styles.buttonContainer}>
+            <Button title="⬅ Back to Start" onPress={goToDifferentPage} color="#ff7f50"/>
+          </View>
         </ScrollView>
       </LinearGradient>
     </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -53,12 +65,12 @@ const styles = StyleSheet.create({
   },
 
   trophy: {
-   position: 'absolute',
-   top: 20,
-   right: 20,
-   fontSize: 120,
-   color: '#FFD700',
-   zIndex: 10,
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    fontSize: 120,
+    color: '#FFD700',
+    zIndex: 10,
   },
 
   row: {
@@ -75,7 +87,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontFamily: 'Arial Black, Impact, Tahoma, Verdana, sans-serif',
+    fontFamily: 'Times New Roman',
     fontWeight: 'bold',
     fontSize: 36,
     color: '#FFFFFF',
@@ -86,6 +98,10 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
   },
+  
+  buttonContainer: {
+    marginTop: 30,
+  }
 });
 
 export default LeaderBoardScreen;
