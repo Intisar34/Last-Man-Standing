@@ -1,18 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated, Text } from 'react-native';
-import RestartButton from './components/RestartButton';
-import FinishButton from './components/FinishButton';
-import { mqtt_client, game_topic } from './components/mqttClient';
+import RestartButton from './RestartButton';
+import FinishButton from './FinishButton';
+import { mqtt_client, game_topic } from './mqttClient';
 import LinearGradient from 'react-native-web-linear-gradient';
 
-// Initiate functions
 export default function CountdownTimer() {
   const [time_left, set_time_left] = useState(60);
   const [stop_timer, setstop_timer] = useState(false); 
   const animation_progress = useRef(new Animated.Value(60)).current;
 
-
-// handle restart MQTT message 
   useEffect(() => {
     mqtt_client.subscribe(game_topic);
     mqtt_client.on("message", (topic, message) => {
@@ -31,7 +28,7 @@ export default function CountdownTimer() {
     };
   }, []);
 
-  const reset_timer = () => { // handle time reset 
+  const reset_timer = () => {
     set_time_left(60);
     animation_progress.setValue(60);
   };
@@ -50,7 +47,7 @@ const run_timer = () => {
     set_time_left(current => current - 1);
   }, 1000);
 
-  return () => clearTimeout(timer); 
+  return () => clearTimeout(timer);
 };
 
 // Add handler for finish
@@ -58,12 +55,12 @@ const handleFinish = () => {
   setstop_timer(true); // This will stop the timer
 };
 
-  const get_progress_width = animation_progress.interpolate({ // cconvert seconds into procentage
+  const get_progress_width = animation_progress.interpolate({
     inputRange: [0, 60],
     outputRange: ['0%', '100%']
   });
 
-  const get_progress_color = () => { // change time according to how many seconds left
+  const get_progress_color = () => {
     if (time_left > 45) return '#4CAF50';
     else if (time_left > 30) return '#FFC107';
     else if (time_left > 15) return '#FF9800';
@@ -72,7 +69,7 @@ const handleFinish = () => {
 
   useEffect(run_timer, [time_left]);
 
-// View components on screen
+
   return (
     <View style={styles.background}>
       <LinearGradient  
@@ -84,7 +81,7 @@ const handleFinish = () => {
       <View style={styles.timer_background}>
         <Animated.View style={[styles.timer_progress, 
           { width: get_progress_width,
-            backgroundColor: get_progress_color() }]}/>
+            backgroundColor: get_progress_color() }]} />
       </View>
       <RestartButton />
       <FinishButton currentTime={time_left} onFinish={handleFinish}/>
@@ -94,7 +91,6 @@ const handleFinish = () => {
 
 };
 
-// Page format and styling
 const styles = StyleSheet.create({
   background: {
     height: '100vh',
