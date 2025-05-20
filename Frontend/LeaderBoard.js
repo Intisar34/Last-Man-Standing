@@ -2,23 +2,61 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
 import { useNavigate } from 'react-router-dom';
 import LinearGradient from "react-native-web-linear-gradient";
-import { fetchScores } from './Backend/scores';
+import { fetchScores } from '../Backend/scores';
+import { getRandomBotsWithScores } from '../Backend/Generatebots'
 
 const LeaderBoardScreen = () => {
   const [users, setUsers] = useState([]);
+  const [bots, setBots] = useState([])
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    async function loadScores() {
-      const data = await fetchScores();
-      setUsers(data);
+    async function loadData() {
+
+      // Fetches bots and user scores.
+      const [botData, userData] = await Promise.all([
+        getRandomBotsWithScores(10),
+        fetchScores()
+      ])
+      setBots(botData)
+      setUsers(userData)
     }
-    loadScores();
+    loadData();
   }, []);
+
+  // Combines bots and users and sort by score descending.
+  const leaderboard = [...bots, ...users].sort((a, b) => b.score - a.score)
+
+  let leaderBoarddisplay
+
+  // Conditional rendering for the leaderboard display.
+  if (leaderboard.length === 0) {
+    leaderBoarddisplay = (
+      <Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>
+        No scores to display yet.
+      </Text>
+    )
+  } else {
+    leaderBoarddisplay = leaderboard.map((item, index) => {
+      let medal = ''
+      if (index === 0) medal = '🥇'
+      else if (index === 1) medal = '🥈'
+      else if (index === 2) medal = '🥉'
+
+      return (
+        <View key={item.username} style={styles.row}>
+          <Text style={[styles.username_text, { flex: 2, textAlign: 'left' }]}>
+            {medal} {item.username}
+          </Text>
+          <Text style={[styles.score_text, { flex: 1, textAlign: 'right' }]}>{item.score}</Text>
+        </View>
+      )
+    })
+  }
 
   const goToDifferentPage = () => {
     navigate('/startpage');
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -36,23 +74,11 @@ const LeaderBoardScreen = () => {
             <Text style={[styles.header, { flex: 2 }]}>Username</Text>
             <Text style={[styles.header, { flex: 1, textAlign: 'right' }]}>Score</Text>
           </View>
-
-          {users.length === 0 ? (
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>
-              No scores to display yet.
-            </Text>
-          ) : (
-            users.map((user, index) => (
-              <View key={index} style={styles.row}>
-                <Text style={[styles.username, { flex: 2 }]}>{user.username}</Text>
-                <Text style={[styles.score, { flex: 1, textAlign: 'right' }]}>{user.score}</Text>
-              </View>
-            ))
-          )}
+          {leaderBoarddisplay}
         </ScrollView>
 
         <View style={styles.buttonContainer}>
-          <Button title="⬅ Back to Start" onPress={goToDifferentPage} color="#8b008b" />
+          <Button title='⬅ Back to Start' onPress={goToDifferentPage} color='#8b008b' />
         </View>
       </LinearGradient>
     </View>
@@ -99,15 +125,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#FFD700',
   },
-  username: {
-    fontSize: 18,
+  username_text: {
+    fontFamily: 'Times New Roman',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textShadowColor: '#000000',
     color: '#FFFFFF',
-    fontWeight: 'bold',
+    letterSpacing: 1
   },
-  score: {
-    fontSize: 18,
-    color: '#FFFF00',
+  score_text: {
+    fontFamily: 'Times New Roman',
+    fontSize: 25,
     fontWeight: 'bold',
+    textShadowColor: '#000000',
+    color: '#FFFFFF',
+    letterSpacing: 1
   },
   text: {
     fontFamily: 'Times New Roman',
