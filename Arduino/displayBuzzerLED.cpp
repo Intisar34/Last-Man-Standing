@@ -141,3 +141,21 @@ void gameOver()
 
   leds.setColorRGB(0, 0, 0, 0); // turn off the LED.
 }
+
+// screen set up for the WIO Terminal when the game is finished
+void gameFinishDisplay()
+{
+  isGameOver = true;
+  tft.fillScreen(TFT_WHITE);
+  tft.setTextColor(TFT_BLACK);
+  tft.setTextSize(3);
+  tft.setCursor(40, 90);
+  tft.println("CONGRATULATIONS!");
+
+  tft.setTextColor(TFT_BLACK);
+  tft.setTextSize(2);
+  tft.setCursor(90, 140);
+  tft.println("GAME FINISHED");
+
+  leds.setColorRGB(0, 0, 0, 0); // turn off the LED.
+}
