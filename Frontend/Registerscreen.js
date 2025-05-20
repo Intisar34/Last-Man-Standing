@@ -35,7 +35,7 @@ const RegisterScreen = () => {
         .select('username')
         .eq('username', username);
   
-      if (userExists) {
+      if (userExists.length > 0) {
         alert('Username already exists.');
         return;
       }
