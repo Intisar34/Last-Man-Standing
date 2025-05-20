@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { mqtt_client } from './mqttClient';
+import { useNavigate } from 'react-router-dom';
 
 // Initialize finish button 
 const FinishButton = ({ currentTime, onFinish }) => {
+
+    const navigate = useNavigate();
     const handlePress = () => {
       // Stop the timer
       onFinish();
@@ -13,7 +16,10 @@ const FinishButton = ({ currentTime, onFinish }) => {
 
     setTimeout(() => {
         alert(`Game Finished, Your finishing time is ${currentTime} sec`, [{ text: "OK" }]);
+        navigate('/startpage')     
       }, 100);
+      navigate('/startpage');
+
   };
 
 // View button on screen
