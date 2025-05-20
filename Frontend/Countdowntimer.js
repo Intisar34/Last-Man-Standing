@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { View,StyleSheet} from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, StyleSheet, Animated, Text } from 'react-native';
 import RestartButton from './components/RestartButton';
+import FinishButton from './components/FinishButton';
 import { mqtt_client, game_topic } from './components/mqttClient';
+import LinearGradient from 'react-native-web-linear-gradient';
 
-//subscribing to the
-export default function Countdown() {
-  const [count, setCount] = useState(90);
+// Initiate functions
+export default function CountdownTimer() {
+  const [time_left, set_time_left] = useState(60);
+  const [stop_timer, setstop_timer] = useState(false); 
+  const animation_progress = useRef(new Animated.Value(60)).current;
 
+
+// handle restart MQTT message 
   useEffect(() => {
     mqtt_client.subscribe(game_topic);
-    
     mqtt_client.on("message", (topic, message) => {
       const command = message.toString();
-       if (topic === game_topic) {
-        if (command === "start")
-          setCount(90);
-        else if (command === "restart") {
-          setCount(90);
+      if (topic === game_topic) {
+        if (command === "start") {
+          reset_timer();
+        } else if (command === "restart") {
+          reset_timer();
         }
       }
     });
@@ -25,59 +30,100 @@ export default function Countdown() {
       mqtt_client.unsubscribe(game_topic);
     };
   }, []);
-// countdown logic 
-  useEffect(() => {
-    if (count === 0) return;
-    let timer = setTimeout(() => {
-      setCount(count => count - 1);
-    }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [count]);
+  const reset_timer = () => { // handle time reset 
+    set_time_left(60);
+    animation_progress.setValue(60);
+  };
 
-  return (
-    <View style={styles.container}>
-      <h1 style={styles.count_down}>
-        {timerFormat(count)}
-      </h1>
-      <RestartButton />
-    </View>
-  );
+// This checks the stop_timer function
+const run_timer = () => {
+  if (time_left === 0 || stop_timer) return;
+  
+  Animated.timing(animation_progress, {
+    toValue: time_left - 1,
+    duration: 1000,
+    useNativeDriver: false,
+  }).start();
+  
+  const timer = setTimeout(() => {
+    set_time_left(current => current - 1);
+  }, 1000);
+
+  return () => clearTimeout(timer); 
 };
 
-function timerFormat(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
+// Add handler for finish
+const handleFinish = () => {
+  setstop_timer(true); // This will stop the timer
+};
 
-  let formatted = "";
-
-  if (minutes < 10) {
-    formatted += "0";
-  }
-  formatted += minutes + ":";
-
-  if (seconds < 10) {
-    formatted += "0";
-  }
-  formatted += seconds;
-
-  return formatted;
-}
- 
-
-const styles = StyleSheet.create({
-    container: {
-      backgroundColor: '#2b5876',
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    count_down: {
-      color: '#fff',
-      font: 'Beachside',
-      fontSize: 50,
-      fontWeight: 'bold',
-    },
+  const get_progress_width = animation_progress.interpolate({ // cconvert seconds into procentage
+    inputRange: [0, 60],
+    outputRange: ['0%', '100%']
   });
+
+  const get_progress_color = () => { // change time according to how many seconds left
+    if (time_left > 45) return '#4CAF50';
+    else if (time_left > 30) return '#FFC107';
+    else if (time_left > 15) return '#FF9800';
+    else return '#F44336';
+  };
+
+  useEffect(run_timer, [time_left]);
+
+// View components on screen
+  return (
+    <View style={styles.background}>
+      <LinearGradient  
+        colors={['#FF0000', '#800080', '#0000FF']} 
+        style={styles.linearGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}>
+      <Text style={styles.header}>Tick Tock...</Text>
+      <View style={styles.timer_background}>
+        <Animated.View style={[styles.timer_progress, 
+          { width: get_progress_width,
+            backgroundColor: get_progress_color() }]}/>
+      </View>
+      <RestartButton />
+      <FinishButton currentTime={time_left} onFinish={handleFinish}/>
+      </LinearGradient>
+    </View>
+  );
+
+};
+
+// Page format and styling
+const styles = StyleSheet.create({
+  background: {
+    height: '100vh',
+    width: '100vw'
+},
+linearGradient: {
+  height: '100vh',
+  width: '100vw',
+  justifyContent: 'center',  
+  alignItems: 'center',       
+  paddingTop: 0,         
+},
+  header: {
+    font: 'Beachside',
+    fontSize: 60,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 20,
+  },
+  timer_background: {
+    width: '40%',
+    height: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginBottom: 60,
+  },
+  timer_progress: {
+    height: '100%',
+    borderRadius: 15,
+  },
+});

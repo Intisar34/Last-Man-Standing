@@ -1,5 +1,6 @@
 #include "displayBuzzerLED.h"
 #include "mqttConnection.h"
+#include "movementDetection.h"
 #include <ChainableLED.h>
 #include "pitches.h"
 #include <TFT_eSPI.h>
@@ -17,9 +18,9 @@ int durations[] = {4, 8, 8, 8, 8, 8, 8, 8, 8};
 int melodies[] = {NOTE_E2, NOTE_F2, NOTE_A1, NOTE_B0, NOTE_AS4, 0, NOTE_G4, NOTE_F7, NOTE_CS6};
 int currentRound = 0;
 unsigned long greenLightStart = 0;
-unsigned long greenLightDuration = 5000;
+unsigned long greenLightDuration = 3000;
 unsigned long redLightStart = 0;
-unsigned long redLightDuration = 3000;
+unsigned long redLightDuration = 4000;
 
 bool GreenStage = false;
 bool RedStage = false;
@@ -44,7 +45,7 @@ void gameLogic()
   if (RedStage && millis() - redLightStart >= redLightDuration)
   { // If its currently the red stage and the duration has passed, then increment the round.
     currentRound++;
-    if (currentRound < 3)
+    if (currentRound < 10)
     { // if the round is still less than three, then start the green stage again.
       startGreenStage();
     }
@@ -81,7 +82,7 @@ void melody()
   {
     int noteDuration = 1000 / durations[i];
     tone(BUZZER, melodies[i], noteDuration);
-    delay(noteDuration * 1.3);
+    delay(80);
     noTone(BUZZER);
   }
 }
@@ -94,11 +95,10 @@ void startGreenStage()
 
   tft.fillScreen(TFT_GREEN);
   tft.setTextColor(TFT_BLACK);
-  tft.setTextSize(2);
-  tft.setCursor(40, 60);
-  tft.println("GAME HAS STARTED!!");
+  tft.setTextSize(3);
   tft.setCursor(18, 112);
-  tft.println("RUN FOR YOUR LIFE!");
+  tft.println("GREEN LIGHT!!");
+  tft.setCursor(30, 112);
 
   leds.setColorRGB(0, 0, 255, 0); // sets the color to green on the LED.
   melody();
@@ -113,16 +113,12 @@ void startRedStage()
 
   tft.fillScreen(TFT_RED);
   tft.setTextColor(TFT_BLACK);
-  tft.setTextSize(2);
+  tft.setTextSize(4);
   tft.setCursor(18, 112);
   tft.println("RED LIGHT!!");
+  tft.setCursor(30, 112);
 
-  leds.setColorRGB(0, 255, 0, 0); // sets the color to red on the LED.
-
-  mqttClient.beginMessage("game/state");
-  mqttClient.print("Red light");
-  mqttClient.endMessage();
-
+  leds.setColorRGB(0, 255, 0, 0);
   melody();
 
   if (checkDistance())
@@ -137,7 +133,6 @@ void startRedStage()
 void gameOver()
 {
   isGameOver = true;
-
   tft.fillScreen(TFT_WHITE);
   tft.setTextColor(TFT_BLACK);
   tft.setTextSize(2);
