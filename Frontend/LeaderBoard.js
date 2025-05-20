@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
 import LinearGradient from "react-native-web-linear-gradient";
 
-
 const LeaderBoardScreen = () => (
-
     <View style={styles.container}>
       <LinearGradient
         colors={['#FF0000', '#800080', '#0000FF']} 
@@ -23,7 +20,10 @@ const LeaderBoardScreen = () => (
             <Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>
               No scores to display yet.
             </Text>
+            <View style={styles.buttonContainer}>
+        </View>
         </ScrollView>
+         <Button title="⬅ Back to Start"  color="#ff7f50" />
       </LinearGradient>
     </View>
 );
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     height: '100vh',
     width: '100vw',
   },
-
+  
   linearGradient: {
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -86,8 +86,10 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
   },
+   buttonContainer: {
+    marginTop: 30,
+  }
 });
-
 export default LeaderBoardScreen;
 
 
