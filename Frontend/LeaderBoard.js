@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react'; 
 import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
-import LinearGradient from "react-native-web-linear-gradient";
 import { useNavigate } from 'react-router-dom';
+import LinearGradient from "react-native-web-linear-gradient";
+import { fetchScores } from './Backend/scores';
 
 const LeaderBoardScreen = () => {
-  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    async function loadScores() {
+      const data = await fetchScores();
+      setUsers(data);
+    }
+    loadScores();
+  }, []);
 
   const goToDifferentPage = () => {
     navigate('/startpage');
@@ -13,12 +23,12 @@ const LeaderBoardScreen = () => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#FF0000', '#800080', '#0000FF']} 
+        colors={['#FF0000', '#800080', '#0000FF']}
         style={styles.linearGradient}
         start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }} 
+        end={{ x: 1, y: 1 }}
       >
-        <Text style={styles.trophy}>🏆</Text> 
+        <Text style={styles.trophy}>🏆</Text>
         <Text style={styles.text}>🏅WELCOME TO LEADERBOARD! 🏅</Text>
 
         <ScrollView style={styles.table}>
@@ -27,14 +37,23 @@ const LeaderBoardScreen = () => {
             <Text style={[styles.header, { flex: 1, textAlign: 'right' }]}>Score</Text>
           </View>
 
-          <Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>
-            No scores to display yet.
-          </Text>
-
-          <View style={styles.buttonContainer}>
-            <Button title="⬅ Back to Start" onPress={goToDifferentPage} color="#ff7f50"/>
-          </View>
+          {users.length === 0 ? (
+            <Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>
+              No scores to display yet.
+            </Text>
+          ) : (
+            users.map((user, index) => (
+              <View key={index} style={styles.row}>
+                <Text style={[styles.username, { flex: 2 }]}>{user.username}</Text>
+                <Text style={[styles.score, { flex: 1, textAlign: 'right' }]}>{user.score}</Text>
+              </View>
+            ))
+          )}
         </ScrollView>
+
+        <View style={styles.buttonContainer}>
+          <Button title="⬅ Back to Start" onPress={goToDifferentPage} color="#8b008b" />
+        </View>
       </LinearGradient>
     </View>
   );
@@ -45,7 +64,6 @@ const styles = StyleSheet.create({
     height: '100vh',
     width: '100vw',
   },
-
   linearGradient: {
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -53,7 +71,6 @@ const styles = StyleSheet.create({
     width: '100vw',
     paddingTop: 50,
   },
-
   table: {
     marginTop: 60,
     width: '80%',
@@ -61,9 +78,8 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'rgba(255,255,255,0.2)',
     borderRadius: 8,
-    maxHeight: '70vh',
+    maxHeight: '60vh',
   },
-
   trophy: {
     position: 'absolute',
     top: 20,
@@ -72,20 +88,27 @@ const styles = StyleSheet.create({
     color: '#FFD700',
     zIndex: 10,
   },
-
   row: {
     flexDirection: 'row',
     paddingVertical: 10,
     borderBottomColor: '#DCD0FF',
     borderBottomWidth: 1,
   },
-
   header: {
     fontWeight: 'bold',
     fontSize: 20,
     color: '#FFD700',
   },
-
+  username: {
+    fontSize: 18,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  score: {
+    fontSize: 18,
+    color: '#FFFF00',
+    fontWeight: 'bold',
+  },
   text: {
     fontFamily: 'Times New Roman',
     fontWeight: 'bold',
@@ -98,12 +121,10 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
   },
-  
   buttonContainer: {
     marginTop: 30,
   }
 });
 
 export default LeaderBoardScreen;
-
 
