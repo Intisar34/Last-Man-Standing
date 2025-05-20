@@ -26,5 +26,6 @@ void melody();
 void startGreenStage();
 void startRedStage();
 void gameOver();
+void gameFinishDisplay();
 
 #endif
