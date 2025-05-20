@@ -10,7 +10,7 @@ const LoginScreen = () => {
     username: ""
   });
 
-  const navigate = useNavigate();
+  const navigate = useNavigate();// this is for navigation
 
   const handleChange = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
