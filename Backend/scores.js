@@ -10,7 +10,6 @@ function scoreLogic(currentTime) {
   return score;
 }
 
-
 export async function saveScore(currentTime) {
   let username = getLoggedInUsername();
   if (!username) {
@@ -38,4 +37,24 @@ export async function saveScore(currentTime) {
   if (upsertError) {
     console.error('Error updating score:', upsertError);
   }
+} 
+// fetches the users score from the database
+export async function fetchScores() {
+  const username = getLoggedInUsername();
+  if (!username) {
+    console.error('No user is currently logged in.');
+    return [];
+  }
+
+  const { data, error } = await supabase
+    .from('users')
+    .select('username, score')
+    .eq('username', username);
+
+  if (error) {
+    console.error('Error fetching scores:', error);
+    return [];
+  }
+
+  return data;
 }
