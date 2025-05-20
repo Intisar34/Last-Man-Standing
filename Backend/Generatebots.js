@@ -25,5 +25,8 @@ export async function getRandomBotsWithScores(limit = 10) {
     score: getRandomScore(),
   }))
 
+  // Sorts the bots by descending order.
+  botsWithScores.sort((a, b) => b.score - a.score)
+
   return botsWithScores
 }
