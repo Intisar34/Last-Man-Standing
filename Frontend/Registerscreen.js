@@ -43,7 +43,7 @@ const RegisterScreen = () => {
       // inserts the users infromation into the database
       await supabase
       .from('users')
-      .insert([{ username, email, phone_number:phonenumber,score }]); // column name must match exactly
+      .insert([{ username, email, phone_number:phonenumber,score }]);
 
       alert(`Welcome to Last Man Standing, ${username}!`);
       navigate('/startpage');
