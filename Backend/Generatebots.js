@@ -25,6 +25,15 @@ export async function getRandomBotsWithScores(limit = 10) {
     score: getRandomScore(),
   }))
 
+  // Updates the scores for the bots in the supabase database 
+  const { error: updateError } = await supabase
+  .from('bots')
+  .upsert(botsWithScores, { onConflict: ['id'] })
+
+  if (updateError) {
+    console.error('Error updating bot scores:', updateError)
+  }
+
   // Sorts the bots by descending order.
   botsWithScores.sort((a, b) => b.score - a.score)
 
