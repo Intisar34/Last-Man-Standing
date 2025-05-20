@@ -20,15 +20,36 @@ const RegisterScreen = () => {
     setForm(previous => ({ ...previous, [field]: value })); 
   };
 
-  // Handles the registration process when the user is done with the registration.
+  // Handles validity of email and phonenumber.
+  const isValid = () => {
+
+  if (!form.username || !form.email || !form.phonenumber) {
+    alert('Missing Info. Please fill in all fields.');
+    return;
+  }
+  
+  if(!form.email.includes('@') || !form.email.includes('.')) {
+    alert('Invalid Email. Please enter a valid email address.')
+    return false;
+  }
+
+  if(form.phonenumber.length !== 10 || isNaN(form.phonenumber)) {
+    alert('Invalid Phone Number. Please enter 10 digit number.')
+    return false;
+  };
+
+  return true;
+
+};
+
+  // Handles the registration process when the user is done.
   const handleRegister = async () => {
     const { username, email, phonenumber, score} = form;
-  
-    if (!username || !email || !phonenumber) {
-      alert('Missing Info. Please fill in all fields.');
+
+    if (!isValid()){
       return;
     }
-
+  
       //checks the username in the database
       const { data: userExists } = await supabase
         .from('users')
