@@ -1,7 +1,7 @@
 // Libraries
 import React from 'react';
 import { View, Button, StyleSheet} from 'react-native';
-import { sendCommand } from './mqttClient';
+import { sendCommand } from '../Backend/mqttClient';
 
 // Handles mqtt and restart signal commands
 const RestartButton = () => {

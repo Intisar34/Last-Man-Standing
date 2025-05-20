@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated, Text } from 'react-native';
 import RestartButton from './RestartButton';
 import FinishButton from './FinishButton';
-import { mqtt_client, game_topic } from './mqttClient';
+import { mqtt_client, game_topic } from '../Backend/mqttClient';
 import LinearGradient from 'react-native-web-linear-gradient';
 
 export default function CountdownTimer() {
