@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import LinearGradient from 'react-native-web-linear-gradient';
 import { supabase } from '../Backend/supabaseClient'; 
 
+//Display Register Screen
 const RegisterScreen = () => {
   const [form, setForm] = useState({
     username: "",
