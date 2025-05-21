@@ -7,15 +7,15 @@ Ultrasonic ultrasonic(A3); //(trig,echo)
 // Updates the last_distance and is called at GreenStage.
 void updateLastDistance()
 {
-    last_distance = ultrasonic.MeasureInInches();
+    last_distance = ultrasonic.MeasureInCentimeters();
 }
 
 // returns if there is a change in distance
 bool checkDistance()
 {
     bool moved = false;
-    float sensitivity = 4.0;
-    float current_distance = ultrasonic.MeasureInInches();
+    float sensitivity = 3.0;
+    float current_distance = ultrasonic.MeasureInCentimeters();
     Serial.println(current_distance);
     float difference = current_distance - last_distance;
     if (abs(difference) > sensitivity)
@@ -28,5 +28,5 @@ bool checkDistance()
 // Returns the Distance
 float returnDistance()
 {
-    return ultrasonic.MeasureInInches();
+    return ultrasonic.MeasureInCentimeters();
 }

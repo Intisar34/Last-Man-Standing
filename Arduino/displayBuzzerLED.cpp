@@ -1,6 +1,5 @@
 #include "displayBuzzerLED.h"
 #include "mqttConnection.h"
-#include "movementDetection.h"
 #include <ChainableLED.h>
 #include "pitches.h"
 #include <TFT_eSPI.h>
@@ -34,16 +33,19 @@ void BuzzerLEDsetup()
   tft.begin();
 }
 // Handles game stages transitions based on timers.
-void gameLogic(){
+void gameLogic()
+{
   if (isGameOver)
     return;
-  if (GreenStage && millis() - greenLightStart >= greenLightDuration) { //If it is currently in green stage and the duration has passed, switch to red stage.
+  if (GreenStage && millis() - greenLightStart >= greenLightDuration)
+  { // If it is currently in green stage and the duration has passed, switch to red stage.
     startRedStage();
   }
   if (RedStage && millis() - redLightStart >= redLightDuration)
   { // If its currently the red stage and the duration has passed, then increment the round.
     currentRound++;
-    if (currentRound < 10) { // if the round is still less than three, then start the green stage again.
+    if (currentRound < 10)
+    { // if the round is still less than three, then start the green stage again.
       startGreenStage();
     }
     else
@@ -57,6 +59,7 @@ void gameLogic(){
 void startGame()
 {
   currentRound = 0;
+  isGameOver = false;
   startGreenStage();
 }
 // the set up screen on the WIO terminal for restarting the game.
@@ -96,9 +99,8 @@ void startGreenStage()
   tft.setCursor(18, 112);
   tft.println("GREEN LIGHT!!");
   tft.setCursor(30, 112);
-  
 
-  leds.setColorRGB(0, 0, 255, 0);// sets the color to green on the LED.
+  leds.setColorRGB(0, 0, 255, 0); // sets the color to green on the LED.
   melody();
   updateLastDistance();
 }
@@ -115,7 +117,7 @@ void startRedStage()
   tft.setCursor(18, 112);
   tft.println("RED LIGHT!!");
   tft.setCursor(30, 112);
-          
+
   leds.setColorRGB(0, 255, 0, 0);
   melody();
 
@@ -128,13 +130,32 @@ void startRedStage()
 }
 
 // set up screen on the WIO terminal for game over.
-void gameOver() {
+void gameOver()
+{
   isGameOver = true;
   tft.fillScreen(TFT_WHITE);
   tft.setTextColor(TFT_BLACK);
   tft.setTextSize(2);
   tft.setCursor(94, 112);
   tft.println("GAME OVER");
+
+  leds.setColorRGB(0, 0, 0, 0); // turn off the LED.
+}
+
+// screen set up for the WIO Terminal when the game is finished
+void gameFinishDisplay()
+{
+  isGameOver = true;
+  tft.fillScreen(TFT_WHITE);
+  tft.setTextColor(TFT_BLACK);
+  tft.setTextSize(3);
+  tft.setCursor(40, 90);
+  tft.println("CONGRATULATIONS!");
+
+  tft.setTextColor(TFT_BLACK);
+  tft.setTextSize(2);
+  tft.setCursor(90, 140);
+  tft.println("GAME FINISHED");
 
   leds.setColorRGB(0, 0, 0, 0); // turn off the LED.
 }
