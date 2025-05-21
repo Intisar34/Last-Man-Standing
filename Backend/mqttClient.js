@@ -19,7 +19,7 @@ client.on('error', (err) => {
 export const mqtt_client = client;
 export const game_topic = MQTT_TOPIC;
 
-// Handles sending commands
+// Handles sent commands
 export const sendCommand = (cmd) => {
   if (client.connected) {
     client.publish(MQTT_TOPIC, cmd);

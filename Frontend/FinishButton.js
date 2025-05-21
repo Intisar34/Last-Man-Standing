@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, Button, StyleSheet } from 'react-native';
+<<<<<<< HEAD:Frontend/components/FinishButton.js
 import { mqtt_client } from './mqttClient';
 import { saveScore } from '../../Backend/scores';
 import { useNavigate } from 'react-router-dom';
+=======
+import { mqtt_client } from '../Backend/mqttClient';
+>>>>>>> 01ed244ce45f830b0c1188f7d7fb17c0b028f600:Frontend/FinishButton.js
 
 // Initialize finish button 
 const FinishButton = ({ currentTime, onFinish}) => {

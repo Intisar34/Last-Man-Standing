@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { View, Text, Button, StyleSheet} from 'react-native';
-import { sendCommand } from './components/mqttClient';
+import { sendCommand } from '../Backend/mqttClient';
 
 // Handle page navigation
 const StartScreen = () => {
