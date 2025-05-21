@@ -4,6 +4,9 @@
 
 void LCDsetup();
 void countdown();
+void stopTimer();
+void resetTimer();
+
 extern int timer;
 extern rgb_lcd lcd;
 extern unsigned long timerUpdate;
