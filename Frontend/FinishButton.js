@@ -1,22 +1,24 @@
 import React from 'react';
 import { View, Button, StyleSheet } from 'react-native';
+import { saveScore } from '../Backend/scores';
 import { useNavigate } from 'react-router-dom';
 import { mqtt_client } from '../Backend/mqttClient';
 
 // Initialize finish button 
-const FinishButton = ({ currentTime, onFinish }) => {
+const FinishButton = ({ currentTime, onFinish}) => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
     const handlePress = () => {
       // Stop the timer
       onFinish();
-    
+      saveScore(currentTime);
+
     // Send MQTT command
     mqtt_client.publish('game/command', 'finish');
 
     setTimeout(() => {
         alert(`Game Finished, Your finishing time is ${currentTime} sec`, [{ text: "OK" }]);
-        navigate('/startpage')     
+        navigate('/leaderboard');
       }, 100);
 
   };
