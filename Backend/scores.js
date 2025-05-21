@@ -1,6 +1,6 @@
 
 import { supabase } from './supabaseClient';
-import { getLoggedInUsername } from './loginScreen';
+import { getLoggedInUsername } from '../Frontend/loginScreen';
 
 function scoreLogic(currentTime) {
   let score = 0;
