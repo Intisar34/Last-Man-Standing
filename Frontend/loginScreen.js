@@ -4,13 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import LinearGradient from 'react-native-web-linear-gradient';
 import { supabase } from '../Backend/supabaseClient'; 
 
+
+let loggedInUsername = null;
+
+function getLoggedInUsername() {
+  return loggedInUsername;
+}
+
 //Displays the log in screen
 const LoginScreen = () => {
   const [form, setForm] = useState({
     username: ""
   });
 
-  const navigate = useNavigate();// this is for navigation
+  const navigate = useNavigate(); // this is for navigation
 
   const handleChange = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -35,6 +42,8 @@ const LoginScreen = () => {
       return;
     }
 
+
+    loggedInUsername = username;
     alert(`Logged in successfully as ${form.username}`);
     navigate('/startpage');
   };
@@ -105,3 +114,5 @@ linearGradient: {
 });
 
 export default LoginScreen;
+export { getLoggedInUsername };
+

@@ -24,6 +24,9 @@ const StartScreen = () => {
         {gameState === 'not_started' && (
           <Button title="Start Game" onPress={startGame} color= '#28a745'/>)}
       </View>
+      <View style={styles.button_2}>
+            <Button title="Leaderboard" onPress={() => navigate('/leaderboard')} color="#ff7f50" />
+          </View>
     </View>
   );
 };
@@ -45,13 +48,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 20,
   },
-  buttonGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-  },
   button: {
     backgroundColor: '#28a745',
+    paddingVertical: 15,
+    paddingHorizontal: 80,
+    borderRadius: 8,
+    marginTop: 20,
+    alignSelf: 'center',
+  },
+    button_2: {
+    backgroundColor: '#ff7f50',
     paddingVertical: 15,
     paddingHorizontal: 80,
     borderRadius: 8,
