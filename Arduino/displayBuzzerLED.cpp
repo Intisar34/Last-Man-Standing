@@ -60,6 +60,7 @@ void gameLogic()
 void startGame()
 {
   currentRound = 0;
+  isGameOver = false;
   startGreenStage();
 }
 // the set up screen on the WIO terminal for restarting the game.
