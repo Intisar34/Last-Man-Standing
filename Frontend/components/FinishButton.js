@@ -17,7 +17,7 @@ const FinishButton = ({ currentTime, onFinish}) => {
     mqtt_client.publish('game/command', 'finish');
 
     setTimeout(() => {
-        alert(Game Finished, Your finishing time is ${currentTime} sec, [{ text: "OK" }]);
+        alert(`Game Finished, Your finishing time is ${currentTime} sec`, [{ text: "OK" }]);
         navigate('/leaderboard');
       }, 100);
 
