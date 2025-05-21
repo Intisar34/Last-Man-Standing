@@ -1,6 +1,5 @@
 #include "displayBuzzerLED.h"
 #include "mqttConnection.h"
-#include "movementDetection.h"
 #include <ChainableLED.h>
 #include "pitches.h"
 #include <TFT_eSPI.h>
