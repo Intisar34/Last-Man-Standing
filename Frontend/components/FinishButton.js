@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { mqtt_client } from './mqttClient';
-import { saveScore } from './Backend/scores';
+import { saveScore } from '../../Backend/scores'
 import { useNavigate } from 'react-router-dom';
 
 // Initialize finish button 
