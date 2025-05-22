@@ -1,9 +1,10 @@
 #include "displayBuzzerLED.h"
 #include "mqttConnection.h"
+#include "movementDetection.h"
+#include "countdownTimer.h"
 #include <ChainableLED.h>
 #include "pitches.h"
 #include <TFT_eSPI.h>
-#include "movementDetection.h"
 
 #define DATA_PIN 0
 #define CLOCK_PIN 1
@@ -135,27 +136,31 @@ void gameOver()
   isGameOver = true;
   tft.fillScreen(TFT_WHITE);
   tft.setTextColor(TFT_BLACK);
-  tft.setTextSize(2);
-  tft.setCursor(94, 112);
-  tft.println("GAME OVER");
+  tft.setTextSize(6);
+  tft.setCursor(80, 140);
+  tft.println("GAME");
+  tft.println(" OVER");
 
   leds.setColorRGB(0, 0, 0, 0); // turn off the LED.
+
+  stopTimer();
 }
 
 // screen set up for the WIO Terminal when the game is finished
 void gameFinishDisplay()
 {
   isGameOver = true;
-  tft.fillScreen(TFT_WHITE);
+  tft.fillScreen(TFT_YELLOW);
   tft.setTextColor(TFT_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(4);
   tft.setCursor(40, 90);
-  tft.println("CONGRATULATIONS!");
+  tft.println("CONGRATS");
 
   tft.setTextColor(TFT_BLACK);
-  tft.setTextSize(2);
+  tft.setTextSize(3);
   tft.setCursor(90, 140);
-  tft.println("GAME FINISHED");
+  tft.println("GAME");
+  tft.println("   COMPLETE");
 
   leds.setColorRGB(0, 0, 0, 0); // turn off the LED.
 }
