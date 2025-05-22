@@ -5,7 +5,7 @@ import RegisterScreen from './Registerscreen';
 import StartScreen from './StartScreen';
 import Countdowntimer from './Countdowntimer';
 import LoginScreen from './loginScreen';
-import Leaderboard from './Leaderboard';
+import Leaderboard from './LeaderBoard';
 
 
 //Handles navigation between screens
