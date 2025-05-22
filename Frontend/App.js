@@ -5,6 +5,7 @@ import RegisterScreen from './Registerscreen';
 import StartScreen from './StartScreen';
 import Countdowntimer from './Countdowntimer';
 import LoginScreen from './loginScreen';
+import Leaderboard from './Leaderboard';
 
 
 //Handles navigation between screens
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/startpage" element={<StartScreen />} />
         <Route path="/Countdown" element={<Countdowntimer />} /> 
+        <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </Router>
   );
