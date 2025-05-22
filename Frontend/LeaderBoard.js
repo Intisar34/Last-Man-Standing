@@ -53,7 +53,8 @@ const LeaderBoardScreen = () => {
       )
     })
   }
-
+  
+  // Navigate to startpage.
   const goToDifferentPage = () => {
     navigate('/startpage');
   }
