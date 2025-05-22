@@ -29,9 +29,9 @@ states that the game has ended.
 
 ## 📁 Project Structure
 
-**LastManStanding/**
-│
-├── **Arduino/** # Arduino code for Wio Terminal
+```
+LastManStanding/
+├── Arduino/         # Arduino code for Wio Terminal
 │ ├── .gitkeep
 │ ├── mainGame.ino
 │ ├── countdownTimer.cpp
@@ -44,14 +44,14 @@ states that the game has ended.
 │ ├── mqttConnection.h
 │ └── pitches.h
 │
-├── **Backend/** # Web app backend logic and MQTT communication
+├── Backend/         # Web app backend logic and MQTT communication
 │ ├── .gitkeep
 │ ├── Generatebots.js
 │ ├── mqttClient.js
 │ ├── scores.js
 │ └── supabaseClient.js
 │
-├── **Frontend/** # React Native frontend for the game interface
+├── Frontend/     # React Native frontend for the game interface
 │ ├── App.js # Main entry point of the app
 │ ├── Countdowntimer.js
 │ ├── FinishButton.js
@@ -63,6 +63,7 @@ states that the game has ended.
 │ └── StartScreen.js
 │
 └── README.md # Project overview and documentation
+```
 
 ## ⚙️ How to Setup?
 
@@ -100,12 +101,12 @@ To be able to use this code, make sure that you have the following:
 
 For this code to work, you need the following Libraries Installed.
 
-TFT_eSPI = [https://github.com/Bodmer/TFT_eSPI]
-Ultrasonic.h = [https://github.com/Seeed-Studio/Seeed_Arduino_UltrasonicRanger]
-WiFiClient.h = [https://docs.arduino.cc/language-reference/en/functions/wifi/client/]
-rpcWiFi.h = [https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi]
-ArduinoMqttClient.h = [https://github.com/arduino-libraries/ArduinoMqttClient]
-PubSubClient.h = [https://pubsubclient.knolleary.net]
+- TFT_eSPI = [https://github.com/Bodmer/TFT_eSPI]
+- Ultrasonic.h = [https://github.com/Seeed-Studio/Seeed_Arduino_UltrasonicRanger]
+- WiFiClient.h = [https://docs.arduino.cc/language-reference/en/functions/wifi/client/]
+- rpcWiFi.h = [https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi]
+- ArduinoMqttClient.h = [https://github.com/arduino-libraries/ArduinoMqttClient]
+- PubSubClient.h = [https://pubsubclient.knolleary.net]
 
 **Importing Libraries in Arduino IDE:**
 
