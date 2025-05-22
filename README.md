@@ -1,5 +1,7 @@
 # Last Man Standing
 
+<img src="assets\last-man-standing-1.png" alt="Logo" width="30%"/>
+
 # 📂 Table of Contents
 
 - [📘 Description](#-description)
