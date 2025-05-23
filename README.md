@@ -25,15 +25,49 @@ The core of the gameplay is managed through a web app, which sends commands to s
 
 ## Hardware & Software Architecture
 
+Our project consists of two main tiers; Hardware and Software, that communicate seamlessly using a Mosquitto MQTT Broker to enable real-time interaction.
+
+### Overall Architecture Flow
+
+1. User interacts with the React Native frontend.
+2. Frontend sends MQTT messages (via backend) to trigger hardware actions.
+3. Hardware listens to those MQTT messages, executes corresponding actions.
+
+For a more detailed system architecture diagram, refer to the [System Architecture Diagram](https://git.chalmers.se/courses/dit113/2025/group-22/system-development/-/wikis/Diagrams/%7BSystem-architecture%7D)
+
 ### Hardware Components:
 
-1. Arduino WIO Terminal.
-2. Grove Ultrasonic sensor
-3. LCD Grove (white on blue)
-4. Chainable RGB grove LED
-5. 3x Grove connector cables.
+- Arduino WIO Terminal – Acts as the main controller with built-in display and sound.
+- Grove Ultrasonic Sensor – Detects motion during the “Red Light” phase.
+- Grove LCD Display (White on Blue) – Displays the countdown timer and game messages.
+- Chainable Grove RGB LED – Indicates game state (Green = Go, Red = Stop).
+- Grove Ultrasonic Sensor - Detects motion during Red Light.
 
-### Software Stack:
+### MQTT Broker:
+
+The system uses MQTT Broker that allows real-time and swift communication between it's hardware and software components.
+
+#### How it works
+
+The MQTT Broker (e.g., Mosquitto) Acts as a central hub. It listens to topics and forwards messages between the hardware and the web app. For our project, The Arduino Wio Terminal subscribe to the "game" topic of our React Native Web.
+
+**React Native Web App (Publisher)**
+
+Publishes to:
+
+- game/start when the user presses the Start button in the Start Screen.
+- game/finish when the user presses the Finish button in the Countdown Timer Screen.
+- game/finish when the user presses the Restart button in the Countdown Timer Screen.
+
+**Wio Terminal (Subscriber)**
+
+Subscribes to:
+
+- game/start → Starts the game logic, "RGB LED" Turns Green, timer on the "LCD Screen" starts and the "Buzzer" plays a melody.
+- game/finish → Ends the game with a congratulation message on "Arduino Wio Terminal".
+- game/restart → Restarts the game by reseting the screen, turning the LED green, reseting the Time of The LCD Screen and playing a melody via Buzzer.
+
+### Software Components:
 
 ```
 LastManStanding/
@@ -57,8 +91,8 @@ LastManStanding/
 │ ├── scores.js
 │ └── supabaseClient.js
 │
-├── Frontend/     # React Native frontend for the game interface
-│ ├── App.js # Main entry point of the app
+├── Frontend/         # React Native frontend for the game interface
+│ ├── App.js          # Main entry point of the app
 │ ├── Countdowntimer.js
 │ ├── FinishButton.js
 │ ├── Homescreen.js
