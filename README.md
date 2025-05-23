@@ -9,6 +9,7 @@
 - [Getting Started](#getting-started)
 - [How to Play?](#how-to-play)
 - [Contribution](#contribution)
+- [Game Demo "Last Man Standing"](https://youtu.be/hN49XPJNxgo)
 
 ## Purpose and Benefits
 
