@@ -1,6 +1,6 @@
 # Last Man Standing
 
-![Logo](assets\last-man-standing-1.png)
+![Logo](assets/last-man-standing-1.png)
 
 # Table of Contents
 
