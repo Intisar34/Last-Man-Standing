@@ -12,16 +12,17 @@
 
 ## Purpose and Benefits
 
-The goal of our project was to design an interactive game that seamlesslyintegrates software and hardware components. Therefore, we decided to implement a version of the "red light, green light" game. Our project uses the WIO SEEED Terminal, a device that combines a display screen with a built-in Arduino-compatible microcontroller. This terminal is connected to an MQTT Broker, a server that handles real-time communication between devices.
-The core of the gameplay is managed through a web app, which sends commands to start or stop the game.The lights, such as the red light and the green light, are displayed using a single LED, and the sounds that will alert the user will be tracked through the WIO Terminal device. To detect players' movement during the "red light" phase, we integrated an Ultrasonic Sensor with the WIO Terminal. If the system detects a movement during a red light, a message on the WIO terminal screen states that the game has ended.
+Many people struggle to balance amusement with a healthy lifestyle, whether due to lack of motivation, a busy schedule, or simply not enjoying traditional physical activity. As a result, individuals seeking entertainment often find it difficult to stay physically active.
 
-### Features
+To bridge this gap, **Last Man Standing** was designed as a physically interactive game that makes exercise both fun and rewarding. By requiring players to move their bodies to advance in the game, it transforms physical activity into a playful experience. The game doesn't just support cardiovascular health—it also sharpens cognitive skills by encouraging strategic planning, quick thinking, and smart decision-making.
 
-- Real-time communication between hardware and web interface via MQTT
-- Movement detection using Ultrasonic sensor
-- LED-based visual signals (red/green light)
-- Sound alert system via WIO Terminal
-- Game controlled through a React-based web interface
+Using motion detection technology, the game promotes:
+
+- Coordination, by requiring precise, controlled movements.
+- Mind-body synchronization, by blending physical response with cognitive awareness.
+- Quick reaction time, by challenging players to stay alert and respond instantly to changing signals.
+
+Through this combination of play and physical challenge, Last Man Standing offers a holistic way to support both mental and physical well being, making fitness engaging, accessible, and fun.
 
 ## Hardware & Software Architecture
 
@@ -57,7 +58,7 @@ Publishes to:
 
 - game/start when the user presses the Start button in the Start Screen.
 - game/finish when the user presses the Finish button in the Countdown Timer Screen.
-- game/finish when the user presses the Restart button in the Countdown Timer Screen.
+- game/restart when the user presses the Restart button in the Countdown Timer Screen.
 
 **Wio Terminal (Subscriber)**
 
@@ -138,6 +139,8 @@ Install these libraries using Sketch > Include Library > Add .ZIP Library
 - [rpcWiFi.h](https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi)
 - [ArduinoMqttClient.h](https://github.com/arduino-libraries/ArduinoMqttClient)
 - [PubSubClient.h](https://pubsubclient.knolleary.net)
+- [ChainableLED.h](https://github.com/Seeed-Studio/Grove_Chainable_RGB_LED)
+- [rgb_lcd.h](https://github.com/Seeed-Studio/Grove_LCD_RGB_Backlight)
 
 **MQTT Configuration:**
 
@@ -181,13 +184,13 @@ To start react native web use the following command:
 
 ### 1. Power Up the Hardware
 
-- Connect the following components to you WIO Terminal:
+- Connect the following components to your WIO Terminal:
 
   - **Grove Ultrasonic Distance Sensor:**
     - [Yellow] => 18/A3 (SIG)
     - [Black] => 6 (GND)
     - [Red] => 2 (5V)
-  - **Blue and White LED Screen:** to port **B** (Left One)
+  - **Blue and White LCD Screen:** to port **B** (Left One)
   - **Grove Chainable RGB LED:** to port **A** (Right One)
 
 - Power the Wio Terminal via USB or battery.
@@ -206,21 +209,35 @@ npm start
 
 ### 3. Play the Game
 
-- On the web app, click the Start button to initiate the game.
+- Power on the Arduino Wio Terminal and wait for it to establish a connection with the MQTT broker.
 
-- The RGB LED on the Wio Terminal will switch to green → players can move.
+- Once the connection is established, a success message will appear on the Serial Monitor.
 
-- At random intervals, it will switch to red → players must stop moving.
+- On the web app, click the Register button and fill in your credentials to create an account and access the game.
 
-- If a player moves during a red light, the ultrasonic sensor detects the motion:
+- Click the Start button to start the game. This will start the countdown timer on the lcd screen.
 
-- A game over message appears on the Wio Terminal screen.
+- The RGB LED on the Wio Terminal will turn green → this means players are allowed to move forward.
 
-- The game ends until restarted from the web interface.
+- When the RGB LED switches to red → players must stop moving immediately.
 
-- Use the Stop button on the web app to reset and restart the game logic.
+- If a player moves during a red light, the ultrasonic sensor will detect the motion:
 
-- Optionally, restart the broker or web server if any connection issues arise.
+  - A "Game Over" message will be displayed on the Wio Terminal screen.
+
+  - The game will be over until it is restarted from the web interface.
+
+- The goal is to reach the finish line by moving only during green lights.
+
+- After crossing the finish line, click the Finish button on the web app to complete the game.
+
+- The player can view their finishing time on the LCD screen of the Wio Terminal.
+
+- The player’s score will be displayed on the leaderboard within the web app.
+
+- To play again, click the Restart button on the web app to reset and restart the game logic.
+
+- If you encounter any connection issues, - Restart the broker or - [Reset the Arduino Wio Terminal](https://forum.seeedstudio.com/t/wio-terminal-reset-reboot-from-code/257625).
 
 ## Contribution:
 
