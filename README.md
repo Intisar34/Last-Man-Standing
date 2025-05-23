@@ -1,27 +1,21 @@
 # Last Man Standing
 
-<img src="assets\last-man-standing-1.png" alt="Logo" width="30%"/>
+![Logo](assets\last-man-standing-1.png)
 
-# 📂 Table of Contents
+# Table of Contents
 
-- [📘 Description](#-description)
-- [✅ Features](#-features)
-- [📁 Project Structure](#-project-structure)
-- [⚙️ How to Setup?](#️-how-to-setup)
-- [🎮 How to Play?](#-how-to-play)
+- [Purpose and Benefits](#purpose-and-benefits)
+- [Hardware & Software Architecture](#hardware--software-architecture)
+- [Getting Started](#getting-started)
+- [How to Play?](#how-to-play)
+- [Contribution](#contribution)
 
-## 📘 Description
+## Purpose and Benefits
 
-We set out to develop a game that integrates software and hardware components. Therefore, we decided to implement a version of the
-"red light, green light" game. Our project uses the WIO SEEED Terminal, a device that combines a display screen with a
-built-in Arduino-compatible microcontroller. This terminal is connected to an MQTT Broker, a server that handles real-time communication
-between devices. The core of the gameplay is managed through a web app, which sends commands to start or stop the game.
-The lights, such as the red light and the green light, are displayed using a single LED, and the sounds that will alert the user
-will be tracked through the WIO Terminal device. To detect players' movement during the "red light" phase, we integrated an
-Ultrasonic Sensor with the WIO Terminal. If the system detects a movement during a red light, a message on the WIO terminal screen
-states that the game has ended.
+The goal of our project was to design an interactive game that seamlesslyintegrates software and hardware components. Therefore, we decided to implement a version of the "red light, green light" game. Our project uses the WIO SEEED Terminal, a device that combines a display screen with a built-in Arduino-compatible microcontroller. This terminal is connected to an MQTT Broker, a server that handles real-time communication between devices.
+The core of the gameplay is managed through a web app, which sends commands to start or stop the game.The lights, such as the red light and the green light, are displayed using a single LED, and the sounds that will alert the user will be tracked through the WIO Terminal device. To detect players' movement during the "red light" phase, we integrated an Ultrasonic Sensor with the WIO Terminal. If the system detects a movement during a red light, a message on the WIO terminal screen states that the game has ended.
 
-## ✅ Features
+### Features
 
 - Real-time communication between hardware and web interface via MQTT
 - Movement detection using Ultrasonic sensor
@@ -29,7 +23,17 @@ states that the game has ended.
 - Sound alert system via WIO Terminal
 - Game controlled through a React-based web interface
 
-## 📁 Project Structure
+## Hardware & Software Architecture
+
+### Hardware Components:
+
+1. Arduino WIO Terminal.
+2. Grove Ultrasonic sensor
+3. LCD Grove (white on blue)
+4. Chainable RGB grove LED
+5. 3x Grove connector cables.
+
+### Software Stack:
 
 ```
 LastManStanding/
@@ -67,69 +71,52 @@ LastManStanding/
 └── README.md # Project overview and documentation
 ```
 
-## ⚙️ How to Setup?
+## Getting Started
 
 ### Prerequisite:
 
 To be able to use this code, make sure that you have the following:
 
-### Sensor and Hardware list:
-
-1. Arduino WIO Terminal.
-2. Grove Ultrasonic sensor
-3. LCD Grove (white on blue)
-4. Chainable RGB grove LED
-5. 3x Grove connector cables.
-
-### Software Dependencies:
-
-1. MQTT Broker (Mosquitto).
-2. Arduino IDE.
-3. Visual Studio Code.
-4. Node.js.
-5. React Native.
+- [Mosquitto MQTT Broker](https://mosquitto.org/download/)
+- [Arduino IDE](https://www.arduino.cc/en/software)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Node.js](https://nodejs.org/en)
+- [React Native](https://reactnative.dev/docs/environment-setup)
 
 ### Arduino IDE Setup
 
-#### Setup The Arduino Wio Board:
+**Wio Terminal Board Installation**
 
-1. Go to "File" in the Menu.
-2. Click "Preferences".
-3. Edit the "Additional Boards Manager URLs"
-4. Insert the following link:
-   [https://arduino.esp8266.com/stable/package_esp8266com_index.json,https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json]
+1. Open Arduino IDE → File > Preferences
+2. Under "Additional Boards Manager URLs", add:
 
-#### Install Libraries:
+```
+https://arduino.esp8266.com/stable/package_esp8266com_index.json,https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+```
 
-For this code to work, you need the following Libraries Installed.
+**Install Libraries:**
 
-- TFT_eSPI = [https://github.com/Bodmer/TFT_eSPI]
-- Ultrasonic.h = [https://github.com/Seeed-Studio/Seeed_Arduino_UltrasonicRanger]
-- WiFiClient.h = [https://docs.arduino.cc/language-reference/en/functions/wifi/client/]
-- rpcWiFi.h = [https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi]
-- ArduinoMqttClient.h = [https://github.com/arduino-libraries/ArduinoMqttClient]
-- PubSubClient.h = [https://pubsubclient.knolleary.net]
+Install these libraries using Sketch > Include Library > Add .ZIP Library
 
-**Importing Libraries in Arduino IDE:**
+- [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
+- [Ultrasonic.h](https://github.com/Seeed-Studio/Seeed_Arduino_UltrasonicRanger)
+- [WiFiClient.h](https://docs.arduino.cc/language-reference/en/functions/wifi/client/)
+- [rpcWiFi.h](https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi)
+- [ArduinoMqttClient.h](https://github.com/arduino-libraries/ArduinoMqttClient)
+- [PubSubClient.h](https://pubsubclient.knolleary.net)
 
-To import these libraries, follow the instructions.
+**MQTT Configuration:**
 
-1. Click on "Sketch" from Menu Bar.
-2. Click on "Include Library" from the Drop-down.
-3. Then, Click "Add .ZIP Library".
-4. Choose the Library.
+In Arduino/mqttConnection.cpp, update:
 
-#### MQTT Setup on Arduino Wio Board:
+```
+char ssid[] = "Network_Name";
+char pass[] = "Password";
+```
 
-Make sure you update your the following in mqttConnection.cpp:
-`char ssid[] = "Network_Name";`
-`char pass[] = "Password";`
+Ensure your MQTT broker is running locally and note your local IP address for later use (default port: 1883).
 
-#### For MQTT Broker Connection:
-
-Make sure you start your broker localy and you need to retrieve your local network ip adress as the _mqtt_server_, as well as the operating mqtt port 1883.
-
-### React Native Web Setup
+### Frontend Setup (React Native)
 
 To set up React Native Web on you device, use
 `npm install`
@@ -145,79 +132,45 @@ npm install mqtt
 npm install @supabase/supabase-js
 ```
 
-#### MQTT Setup on Web App:
+**MQTT Configuration for Web App:**
 
 - Inside Backend\mqttClient.js, update the <ip address> with your pc IP4 address:
   `const MQTT_BROKER = 'ws://<ip_adress>:9001';`
 
-#### Start React Native Web:
+**Start React Native Web:**
 
 To start react native web use the following command:
 
 - npm start
 
-## 🎮 How to Play?
+## How to Play?
 
-### 🔌 1. Power Up the Hardware
+### 1. Power Up the Hardware
 
-Connect the Ultrasonic Sensor, Chainable RGB LED, and LCD (Grove) to the appropriate ports on the Wio Terminal.
+- Connect the following components to you WIO Terminal:
 
-Ensure the Wio Terminal is powered either through USB or battery.
+  - **Grove Ultrasonic Distance Sensor:**
+    - [Yellow] => 18/A3 (SIG)
+    - [Black] => 6 (GND)
+    - [Red] => 2 (5V)
+  - **Blue and White LED Screen:** to port **B** (Left One)
+  - **Grove Chainable RGB LED:** to port **A** (Right One)
 
-The terminal must be connected to your local Wi-Fi network. You can set your Wi-Fi credentials in the file:
+- Power the Wio Terminal via USB or battery.
+- Ensure the Wio Terminal is connected to Wi-Fi.(Set credentials in Arduino/mqttConnection.cpp)
 
-```// mqttConnection.cpp
-char ssid[] = "Your_SSID";
-char pass[] = "Your_PASSWORD";
+### 2. Launch the Game
+
+- Flash the Arduino sketch to your Wio Terminal
+  (Refer to Getting Started for detailed steps)
+
+- Start the Web App:
+
+```
+npm start
 ```
 
-### 🧠 2. Flash the Arduino Code
-
-1. Open the Arduino IDE.
-2. Select the correct board:
-   Tools → Board → Seeeduino Wio Terminal
-3. Connect your Wio Terminal to your computer via USB.
-4. Open the .ino file provided in the Arduino/ directory.
-5. Verify and upload the code using the right arrow icon or Ctrl + U.
-
-### 3. Connect the Sensor to the right Port:
-
-### Grove Ultrasonic Distance Sensor:
-
-- [Yellow] => 18/A3 (SIG)
-- [Black] => 6 (GND)
-- [Red] => 2 (5V)
-
-### Blue and White LED Screen:
-
-- Conenct to port **B** (Left One)
-
-## Grove Chainable RGB LED:
-
-- Connect to port **A** (Right One)
-
-### 💻 3. Run the Web App
-
-Open a terminal and navigate to the React project folder:
-
-`cd WebApp/`
-
-#### Install dependencies:
-
-- [Installation](#installation)
-
-#### Configure MQTT broker address:
-
-Open src/Backend/mqttClient.js
-Replace <ip_address> with your local machine’s IP:
-
-`const MQTT_BROKER = 'ws://192.168.X.X:9001';`
-
-#### Start the app:
-
-`npm start`
-
-### 🕹️ 4. Play the Game
+### 3. Play the Game
 
 - On the web app, click the Start button to initiate the game.
 
@@ -234,3 +187,54 @@ Replace <ip_address> with your local machine’s IP:
 - Use the Stop button on the web app to reset and restart the game logic.
 
 - Optionally, restart the broker or web server if any connection issues arise.
+
+## Contribution:
+
+#### Abdullah Arif: Developer
+
+- Integrated Ultrasonic sensor for movement detection.
+- Contributed to Modularization of Arduino Code.
+- Contributed to weekly presentation.
+- Contributed to bug fix related to Arduino WIO components.
+- Designed and Deployed CI/CD Pipeline.
+- Worked on the Game logic and state management.
+- Implemented The Finish Game Logic.
+- Contributed to WIKI (System Architecture Diagram).
+
+#### Aisha Attar: Developer
+
+- Developed the start screen, including the start and restart buttons.
+- Implemented the time progress bar and the finish button functionality.
+- Added logic to display the completed time on the LCD screen.
+- Integrated MQTT configuration.
+- Actively participated in weekly stand-up meetings.
+- Assisted in integrating various components of the frontend codebase.
+- Contributed to project documentation, including the WIKI (Sequence - Diagram) and Glossary.
+
+#### Anisa Hashi: Developer
+
+- Implemented the Homepage and User Registration functionality on the frontend.
+- Created bots with random scores and contributed to the development of the Leaderboard.
+- Set up and configured the CI/CD pipeline.
+- Contributed to the project Wiki by writing documentation and improving structure.
+- Designed the vertical slicing diagram to illustrate the system architecture.
+- Actively participated in team meetings, decision-making, and collaboration to drive the project forward.
+
+#### Intisar Warfa: Developer
+
+- Developed the game logic for the WIO-terminal
+- Initialized the leaderboard screen that displays the users score and bots
+- Contributed to creating the Database.
+- Contributed to integrating three hardware components(LED,LCD and Ultrasonic distance sensor) to work simultaneously.
+- Actively attended all weekly stand-up meetings
+- Contributed to the development of wiki pages, including meeting notes and system architecture documentation.
+
+#### Sireen Abu Ajamieh: Developer
+
+- Developed the countdown timer logic in both the hardware and frontend.
+- Developed the login screen in frontend.
+- Contributed in the integration of MQTT.
+- Contributed in creating the Supabase database.
+- Contributed to separating the Arduino code into different files.
+- Contributed to the wiki by writing meeting documentation, working on the Supabase database section, and creating the activity diagram.
+- Actively attended in all meetings
