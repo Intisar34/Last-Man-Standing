@@ -40,13 +40,13 @@ module.exports = {
         templateContent: `
         <html>
           <head><meta charset="UTF-8"><title>React Native Web</title></head>
-          <body><div id="app"></div></body>
+          <body><div id="root"></div></body>
         </html>
       `,
     }),
   ],
-  devServer: {
-    static: './public',
+  devServer: { 
+    static: './public', 
     port: 3000,
   },
 };
