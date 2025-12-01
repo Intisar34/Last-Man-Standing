@@ -35,7 +35,7 @@ Our project consists of two main tiers; Hardware and Software, that communicate 
 2. Frontend sends MQTT messages (via backend) to trigger hardware actions.
 3. Hardware listens to those MQTT messages, executes corresponding actions.
 
-For a more detailed system architecture diagram, refer to the [System Architecture Diagram](https://git.chalmers.se/courses/dit113/2025/group-22/system-development/-/wikis/Diagrams/%7BSystem-architecture%7D)
+For a more detailed system architecture diagram, refer to the [System Architecture Diagram](assets/System_Architecture.png)
 
 ### Hardware Components:
 
@@ -250,49 +250,11 @@ npm start
 
 #### Abdullah Arif: Developer
 
-- Integrated Ultrasonic sensor for movement detection.
-- Contributed to Modularization of Arduino Code.
-- Contributed to weekly presentation.
-- Contributed to bug fix related to Arduino WIO components.
-- Designed and Deployed CI/CD Pipeline.
-- Worked on the Game logic and state management.
-- Implemented The Finish Game Logic.
-- Contributed to WIKI (System Architecture Diagram).
-
 #### Aisha Attar: Developer
-
-- Developed the start screen, including the start and restart buttons.
-- Implemented the time progress bar and the finish button functionality.
-- Added logic to display the completed time on the LCD screen.
-- Integrated MQTT configuration.
-- Actively participated in weekly stand-up meetings.
-- Assisted in integrating various components of the frontend codebase.
-- Contributed to project documentation, including the WIKI (Sequence - Diagram) and Glossary.
 
 #### Anisa Hashi: Developer
 
-- Implemented the Homepage and User Registration functionality on the frontend.
-- Created bots with random scores and contributed to the development of the Leaderboard.
-- Set up and configured the CI/CD pipeline.
-- Contributed to the project Wiki by writing documentation and improving structure.
-- Designed the vertical slicing diagram to illustrate the system architecture.
-- Actively participated in team meetings, decision-making, and collaboration to drive the project forward.
-
 #### Intisar Warfa: Developer
-
-- Developed the game logic for the WIO-terminal
-- Initialized the leaderboard screen that displays the users score and bots
-- Contributed to creating the Database.
-- Contributed to integrating three hardware components(LED,LCD and Ultrasonic distance sensor) to work simultaneously.
-- Actively attended all weekly stand-up meetings
-- Contributed to the development of wiki pages, including meeting notes and system architecture documentation.
 
 #### Sireen Abu Ajamieh: Developer
 
-- Developed the countdown timer logic in both the hardware and frontend.
-- Developed the login screen in frontend.
-- Contributed in the integration of MQTT.
-- Contributed in creating the Supabase database.
-- Contributed to separating the Arduino code into different files.
-- Contributed to the wiki by writing meeting documentation, working on the Supabase database section, and creating the activity diagram.
-- Actively attended in all meetings
